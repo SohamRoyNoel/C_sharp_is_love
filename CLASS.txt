@@ -1,0 +1,151 @@
+state=data
+behaviour= method
+
+constructor:(used to initialize the class)(CONSTRUCTOR never returns value, METHOD DOES or DOESNT)
+same name that of your class
+
+public:
+Access modifier
+
+destructor: 
+~<class name>()
+{
+	//clean up code
+}
+-----------------------------------------------------------------------------------------------------------
+using System;
+
+namespace ConsoleApp3
+{
+    class csharp   //class implement
+    {
+        string first_name; //BY DEFAULT "PRIVATE", that is why constructor i s needed.
+        string last_name;
+        public csharp(string Fn, String Ln)  //constructor
+        {
+            this.first_name = Fn;
+            this.last_name = Ln;
+        }
+        public void method() //method
+        {
+            string full = first_name + " " + last_name;
+            Console.WriteLine("full name is {0}", full);
+            Console.ReadKey();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            csharp ob = new csharp("Soham", "Roy"); // it gets the access only becauseof constructor.
+            ob.method();
+        }
+    }
+}
+------------------------------------------------------------------------------------------------------------------
+using System;
+
+namespace ConsoleApp3
+{
+    class csharp
+    {
+        string first_name;
+        string last_name;
+        public csharp(string Fn, String Ln)
+        {
+            this.first_name = Fn;
+            this.last_name = Ln;
+        }
+        public void method()
+        {
+            string full = first_name + " " + last_name;
+            Console.WriteLine("full name is {0}", full);
+            Console.ReadKey();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            csharp ob = new csharp(); //ERROR SIMPLY IT EXPECTS PARAMETER
+            ob.method();
+        }
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------
+DEFAULT CONSTRUCTOR
+-------------------------------------------------------------------------------------------
+using System;
+
+namespace ConsoleApp3
+{
+    class csharp
+    {
+        string first_name;
+        string last_name;
+        public csharp():this("NO F NAME", "NO L NAME") //default constructor.. *1. REFERS MAIN CONSTRUCTOR
+        {
+
+        }
+        public csharp(string Fn, String Ln)//2. REFERS MAIN CLASS
+        {
+            this.first_name = Fn;
+            this.last_name = Ln;
+        }
+        public void method()
+        {
+            string full = first_name + " " + last_name;
+            Console.WriteLine("full name is {0}", full);
+            Console.ReadKey();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            csharp ob = new csharp();
+            ob.method();
+        }
+    }
+}
+*****************************OUTPUT:
+            full name is NO F NAME NO L NAME
+--------------------------------------------------------------------------------------------------------------------
+THIS CASE LEADS TOWARDS overloaded constructors FOR A CLASS.
+using System;
+
+namespace ConsoleApp3
+{
+    class csharp
+    {
+        string first_name;
+        string last_name;
+        public csharp():this("NO F NAME", "NO L NAME")
+        {
+
+        }
+        public csharp(string Fn, String Ln)
+        {
+            this.first_name = Fn;
+            this.last_name = Ln;
+        }
+        public void method()
+        {
+            string full = first_name + " " + last_name;
+            Console.WriteLine("full name is {0}", full);
+            Console.ReadKey();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            csharp ob = new csharp();  //////OVERLOADED 1
+            ob.method();
+
+            csharp ob1 = new csharp("soham", "roy");  //////OVERLOADED 2
+            ob1.method();
+        }
+    }
+}
+

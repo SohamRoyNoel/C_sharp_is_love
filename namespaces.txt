@@ -1,0 +1,329 @@
+------------------------------------------------------------------NameSpace**********
+-----------------------------------------implementing namespace---------------------
+using System;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            wwe.wrestling.raw();
+            
+            wwe.wrestling ob = new wwe.wrestling();
+            ob.smackdown();
+            Console.ReadKey();
+        }
+    }
+}
+namespace wwe
+{
+    class wrestling
+    {
+        public static void raw()
+        {
+            Console.WriteLine("roman is best");
+        }
+        public void smackdown()
+        {
+            Console.WriteLine("John is best");
+        }
+    }
+}
+------------------------------------------------------------------------------------------------------------------------
+using System;
+using wwe;
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            wrestling.raw();
+            
+            wrestling ob = new wwe.wrestling();
+            ob.smackdown();
+            Console.ReadKey();
+        }
+    }
+}
+namespace wwe
+{
+    class wrestling
+    {
+        public static void raw()
+        {
+            Console.WriteLine("roman is best");
+        }
+        public void smackdown()
+        {
+            Console.WriteLine("John is best");
+        }
+    }
+}
+----------------------------------HAVING TWO DIFFERENT SUBNAMESPACES UNDER A ASAME NAMESPACE----------------------
+we need to specify the full name;
+_____________________________________________________
+using System;
+using wwe.ecw;
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            wrestling.raw();
+            
+            wrestling ob = new wrestling();
+            ob.smackdown();
+            Console.ReadKey();
+        }
+    }
+}
+namespace wwe
+{
+    namespace ecw
+    {
+        class wrestling
+        {
+            public static void raw()
+            {
+                Console.WriteLine("roman is best");
+            }
+            public void smackdown()
+            {
+                Console.WriteLine("John is best");
+            }
+        }
+    }
+}
+namespace wwe
+{
+    namespace ufc
+    {
+        class wrestling
+        {
+            public static void raw()
+            {
+                Console.WriteLine("HBK is best");
+            }
+            public void smackdown()
+            {
+                Console.WriteLine("Tacker is best");
+            }
+        }
+    }
+}
+------------------------------------------------------------------ANOTHER case-------------------------------------------
+using System;
+//using wwe.ecw;
+
+namespace ConsoleApp3
+{
+    class Program
+    {   
+        //Fully qualified name;
+        static void Main(string[] args)
+        {
+            wwe.ecw.wrestling.raw();  //roman is best
+            wwe.ufc.wrestling.raw();  //HBK is best
+            Console.ReadKey();
+        }
+    }
+}
+namespace wwe
+{
+    namespace ecw
+    {
+        class wrestling
+        {
+            public static void raw()
+            {
+                Console.WriteLine("roman is best");
+            }
+            public void smackdown()
+            {
+                Console.WriteLine("John is best");
+            }
+        }
+    }
+}
+namespace wwe
+{
+    namespace ufc
+    {
+        class wrestling
+        {
+            public static void raw()
+            {
+                Console.WriteLine("HBK is best");
+            }
+            public void smackdown()
+            {
+                Console.WriteLine("Tacker is best");
+            }
+        }
+    }
+}
+----------------------------------------------------------------------------------AMBIGIOUS CONDITION--------------------------------------------------------------------------------
+using System;
+using wwe.ecw;
+using wwe.ufc;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            wwe.ecw.wrestling.raw();
+            wwe.ufc.wrestling.raw();
+            wrestling ob = new wrestling(); //WE GET AMBIGUITY HERE BECAUSE wwe & ufc BOTH HAVE WRESTLING CLASS. [use FULLY QUALIFIED NAME] OR [ALIES NAME SPACE]
+            ob.
+            Console.ReadKey();
+        }
+   }
+}
+namespace wwe
+{
+    namespace ecw
+    {
+        class wrestling
+        {
+            public static void raw()
+            {
+                Console.WriteLine("roman is best");
+            }
+            public void smackdown()
+            {
+                Console.WriteLine("John is best");
+            }
+        }
+    }
+}
+namespace wwe
+{
+    namespace ufc
+    {
+        class wrestling
+        {
+            public static void raw()
+            {
+                Console.WriteLine("HBK is best");
+            }
+            public void smackdown()
+            {
+                Console.WriteLine("Tacker is best");
+            }
+        }
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------------[ALIES NAME SPACE]-------------------------------------------------------------------------------------------------------
+using System;
+using case1= wwe.ecw;
+using case2=wwe.ufc;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            case1.wrestling.raw();    //roman is best
+            case1.wrestling ob = new case1.wrestling();
+            ob.smackdown();            //John is best
+
+            Console.WriteLine();
+
+            case2.wrestling.raw();                     //HBK is best
+            case2.wrestling ob1 = new case2.wrestling();
+            ob1.smackdown();                            //Tacker is best
+            Console.ReadKey();
+        }
+        
+       public static void call(params int[]nos)
+       {
+           
+       }
+    }
+}
+namespace wwe
+{
+    namespace ecw
+    {
+        class wrestling
+        {
+            public static void raw()
+            {
+                Console.WriteLine("roman is best");
+            }
+            public void smackdown()
+            {
+                Console.WriteLine("John is best");
+            }
+        }
+    }
+}
+namespace wwe
+{
+    namespace ufc
+    {
+        class wrestling
+        {
+            public static void raw()
+            {
+                Console.WriteLine("HBK is best");
+            }
+            public void smackdown()
+            {
+                Console.WriteLine("Tacker is best");
+            }
+        }
+    }
+}
+---------------------------------------------------------------------------------------------------------------------------------MAKE A DIFFERENT CLASSES, (new item>class)----------------------------------------------------------------------------
+class1*********************************************************
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp3
+{
+    class Class1
+    {
+        public static void raw()
+        {
+            Console.WriteLine("roman is best");
+        }
+    }
+}
+class2*********************************************************
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp3
+{
+    class Class2
+    {
+        public static void raw()
+        {
+            Console.WriteLine("HBK is best");
+        }
+    }
+}
+********************************MAIN
+using System;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Class1.raw();
+            Class2.raw();
+            Console.ReadKey();
+        }
+    }
+}

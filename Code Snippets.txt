@@ -1,0 +1,7 @@
+Code Snippets
+*****************************************************************
+> right click-------------> language----------------> code type
+ 
+> ctrl + k +x
+
+> type "for"------------> intellisence arrives---> 2 x tab 

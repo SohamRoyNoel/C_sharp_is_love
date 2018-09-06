@@ -1,0 +1,168 @@
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+using System.Collections.Generic;
+
+//deligate passes a method, as a PARAMETER of another METHOD
+
+namespace ConsoleApp3
+{
+    class Program 
+    {
+        static void Main(string[] args)
+        {
+            List<employee> ob=new List<employee>();
+
+            ob.Add(new employee(){id = 101,name = "Soham",salary = 500000, years = 6});
+            ob.Add(new employee(){id = 102, name = "Bill", salary = 80000, years = 4});
+            ob.Add(new employee(){id = 103, name = "Mark", salary = 50000, years = 4});
+            ob.Add(new employee(){id = 104, name = "Ivy", salary = 45000, years = 5});
+
+            employee.promotion(ob);
+        }
+    }
+
+    class employee
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public int salary { get; set; }
+        public int years { get; set; }
+
+        public static void promotion(List<employee> employees)
+        {
+            foreach (employee emp in employees)
+            {
+                if (emp.years >= 5)
+                {
+                    Console.WriteLine(emp.name+" "+ "is promoted");
+                    Console.ReadKey();
+                }
+            }
+        }
+    }
+}
+***********************************
+Soham is promoted
+Ivy is promoted
+***********************************
+**********************************************************************************************************
+USING DELEGATES
+**********************************************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+using System.Collections.Generic;
+//deligate passes a method, as a PARAMETER of another METHOD
+namespace ConsoleApp3
+{
+    class Program 
+    {
+        static void Main(string[] args)
+        {
+            List<employee> ob=new List<employee>();
+
+            ob.Add(new employee(){id = 101,name = "Soham",salary = 500000, years = 6});
+            ob.Add(new employee(){id = 102, name = "Bill", salary = 80000, years = 4});
+            ob.Add(new employee(){id = 103, name = "Mark", salary = 50000, years = 4});
+            ob.Add(new employee(){id = 104, name = "Ivy", salary = 45000, years = 5});
+
+            promot pp=new promot(PROMOTE);      //4. DELEGATE constructor (PROMOTE) is TARGET
+
+            employee.promotion(ob, pp);   //6. passing the <list of emploees> in ob     //7. PP: invokes the DELECATE to pass PROMOTION method as a PARAMETER of  PROMOT delecate.
+        }
+
+        public static bool PROMOTE(employee empo)   //5. creating the target CLASS having same SIGNATURE of DELEGATE.
+        {
+            if (empo.years>=5)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+
+    public delegate bool promot(employee empl);  //1. Construct a DELEGATE
+
+    public class employee
+    {
+        public int id { get; set; }      //set properties
+        public string name { get; set; }
+        public int salary { get; set; }
+        public int years { get; set; }
+
+        public static void promotion(List<employee> employees, promot ispromotablePromot)       //2. taking list of EMPLOYEES. // 3. MAKING AN OBJECT OF DELEGATE(it invokes this method as DELEGATE is called
+        {
+            foreach (employee emp in employees)
+            {
+                if (ispromotablePromot(emp))
+                {
+                    Console.WriteLine(emp.name+" "+ "is promoted");
+                    Console.ReadKey();
+                }
+            }
+        }
+    }
+}
+****************************************************************************************************************
+PRACTICING DELEGATES
+*****************************************************************************************************************
+using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    public delegate bool issal(employee empoEmployee);
+
+    public class employee
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public int salary { get; set; }
+        public int years { get; set; }
+
+        public void checksal(List<employee>employees, issal promoteIssal)
+        {
+            foreach (employee emp in employees)
+            {
+                if (promoteIssal(emp))
+                {
+                    Console.WriteLine(emp.name+" "+ "is promoted");
+                }
+            }
+        }
+    }
+    class Program 
+    {
+        static void Main(string[] args)
+        {
+            List<employee> obEmployees=new List<employee>();
+            obEmployees.Add(new employee(){id = 101, name = "Soham", salary = 5000000, years = 6});
+            obEmployees.Add(new employee() { id = 102, name = "Bill", salary = 80000, years = 4 });
+            obEmployees.Add(new employee() { id = 103, name = "Mark", salary = 50000, years = 4 });
+            obEmployees.Add(new employee() { id = 104, name = "Ivy", salary = 90000, years = 5 });
+
+            Program obProgram=new Program();
+            issal obIssal=new issal(obProgram.ispromotable);
+
+            employee obeEmployee=new employee();
+            obeEmployee.checksal(obEmployees, obIssal);
+        }
+
+        public bool ispromotable(employee empoEmployee)
+        {
+            if (empoEmployee.salary>=90000)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+}

@@ -1,0 +1,64 @@
+*********************************************************************************************
+when you use FIELDS in public that can be modified from any method, 
+instade MAKE A GETTER AND SETTER METHOD JUST TO 
+save your data from GLOBE
+*********************************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    public class school
+    {
+        private int id;
+        private string name = "john";
+        private int passmark = 35;
+
+        public void setid(int ib)
+        {
+            if (ib <= 0)
+                throw new Exception("id cant be NEGATIVE");
+            else
+                this.id = ib;
+        }
+
+        public int getid()
+        {
+            return this.id;
+        }
+
+        public void setnm(string nm)
+        {
+            if (string.IsNullOrEmpty(this.name))
+                throw new Exception("Cant be null");
+            else
+                this.name = nm;
+        }
+
+        public string getnm()
+        {
+            return string.IsNullOrEmpty(this.name) ? throw new Exception("no name to display") : this.name;
+        }
+
+        public int pass()
+        {
+            return this.passmark;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           school ob=new school();
+            ob.setid(105);
+            ob.setnm("Boat");
+           Console.WriteLine("id={0}, name={1}, passmark={2}", ob.getid(), ob.getnm(), ob.pass());
+            Console.ReadKey();
+        }
+    }
+}
+*********************************************************************************************
+ANY CHANGE HERE WILL BE DONE BY A METHOD:
+it can be replaced by PROPERTIES.
+*********************************************************************************************

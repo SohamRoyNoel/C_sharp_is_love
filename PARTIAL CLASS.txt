@@ -1,0 +1,259 @@
+Partial Classes and Methods
+************************************************************************************
+It is possible to split the definition of a class or a struct, an interface or a method over two or more source files. Each source file contains a section 
+of the type or method definition, and all parts are combined when the application is compiled.
+*************************************************************************************
+Partial Classes USES:
+------------------------
+There are several situations when splitting a class definition is desirable:
+
+When working on large projects, spreading a class over separate files enables multiple programmers to work on it at the same time.
+
+When working with automatically generated source, code can be added to the class without having to recreate the source file. Visual Studio uses this approach when it creates Windows Forms, Web service wrapper code, and so on. You can create code that uses these classes without having to modify the file created by Visual Studio.
+
+To split a class definition, use the partial keyword modifier, as shown here:
+*************************************************************************************
+TO GENERATE A PARTIAL CLASS:
+*************************************
+STEP : 1
+CREATING A CLASS NAMED: class 1
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp3
+{
+    public class Class1
+    {
+        string firstname;   //fields
+        string lastname;
+
+        public string Firstname   //Properties
+        {
+            get
+            {
+                return firstname;
+            }
+            set
+            {
+                firstname = value;
+            }
+        }
+
+        public string Lastname
+        {
+            get
+            {
+                return lastname;
+            }
+            set
+            {
+                lastname = value;
+            }
+        }
+
+        public string cont()    //Method
+        {
+            return firstname + " " + lastname;
+        }
+    }
+}
+
+--------------------------------------------------------------------
+STEP : 2
+CREATING A CLASS NAMED: class 2
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp3
+{
+    public partial class Class2
+    {
+        string firstname;   //Field
+        string lastname;
+
+        public string Firstname    //Properties
+        {
+            get
+            {
+                return firstname;
+            }
+            set
+            {
+                firstname = value;
+            }
+        }
+
+        public string Lastname
+        {
+            get
+            {
+                return lastname;
+            }
+            set
+            {
+                lastname = value;
+            }
+        }
+    }
+}
+
+//getting the properties part from the base class.....
+----------------------------------------------------------------------
+STEP : 3
+CREATING A CLASS NAMED: class 3
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp3        //the mathod that appeared at class1, APPEARED HERE, as apart of partial class
+{
+    public partial class Class3
+    {
+        public string cont2()
+        {
+            return firstname + " " + lastname;
+        }
+    }
+}
+//getting remaining method from CLASS 1
+-------------------------------------------------------------------------
+Main file:
+
+using System;
+using System.Text;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Class1 ob = new Class1();
+            ob.Firstname = "Ivy";
+            ob.Lastname = "Soham";
+            Console.WriteLine(ob.cont());
+
+            Class2 ob1 = new Class2();
+            ob1.Firstname = "Soham";
+            ob1.Lastname = "Ivy";
+            Console.WriteLine(ob1.cont2());
+
+            Console.ReadKey();
+        }
+    }
+}
+*****************************************************************************************************
+rules for abstract class:
+*****************************************************************************************************
+
+>All partial-type definitions meant to be parts of the same type must be modified with partial. For example, the following class declarations generate an error:
+
+>The partial modifier can only appear immediately before the keywords class, struct, or interface.
+
+>Nested partial types are allowed in partial-type definitions as illustrated in the following example:
+
+>All partial-type definitions meant to be parts of the same type must be defined in the same assembly and the same module (.exe or .dll file). Partial definitions cannot span multiple modules.
+
+>The class name and generic-type parameters must match on all partial-type definitions. Generic types can be partial. Each partial declaration must use the same parameter names in the same order.
+
+>The following keywords on a partial-type definition are optional, but if present on one partial-type definition, cannot conflict with the keywords specified on another partial definition for the same type:
+
+public
+
+private
+
+protected
+
+internal
+
+abstract
+
+sealed
+
+base class
+
+new modifier (nested parts)
+
+generic constraints
+
+>All of the parts spread accross the files shuold have same ACCESS MODIFIERS.
+
+>If any part is declared as ABSTRACT, then the entire type is considered ABSTRACT.
+
+>If any part is declared as SEALED, then the entire type is considered SEALED. 
+
+>If any part INHERITS  aclass, then the entire type inherits from THAT CLASS.
+
+>C# DOESNT SUPPORT MULTIPLE CLASS INHERITANCE, Different PARTS of PARTIAL class MUST NOT SPECIFY DIFFERENT CLASS
+
+>DIFFERENT parts of a partial class can have DIFFERENT INTERFACES, and the final type implements all of the partial declarations..
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------EXAMPLE --------------------------------------------------------------------------------------------------------------
+1) Main Class: (that implements the INTERFACES)
+using System;
+using System.Text;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+           
+        }
+  
+    }
+    public interface Iball
+    {
+        void implementation();
+    }
+    public interface ICow
+    {
+        void implementation2();
+    }
+}
+************************************
+2) CLASS 1: (INHERITES ONE OF THE INTERFACES)
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp3
+{
+    public partial class Class2 : ICow  //1ST inheritation, NO IMPLEMENTATION
+    {
+        
+    }
+}
+************************************
+3) CLASS 2: (THAT INHERITES THE REMAINING INTERFACE)
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp3   
+{
+    public partial class Class2 : Iball   //2ND inheritation, PROVIES BOTH IMPLEMENTATION
+    {
+        public void implementation()
+        {
+
+        }
+
+        public void implementation2()
+        {
+
+        }
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+>ANY MEMBER that are declared in a partial defination are AVAILABLE TO THE OTHER PARTS OF PARTIAL CLASS as well.

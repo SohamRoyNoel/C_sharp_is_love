@@ -1,0 +1,43 @@
+int i=100;
+float f=i;
+console.writeline(f);
+------------------------o/p:100
+float i=125.252;
+int f=i;
+console.writeline(f);
+-----------------------o/p:125
+float f=1215151515151515151.77;
+int i=(int)f;
+console.writeline(i);
+-----------------------o/p:--2147483648 (garbage val) coz it is lesser range datatype then float
+float f=1215151511.77;
+int i=Convert.toint32(f);
+console.writeline(i);
+------------------------o/p: ERROR
+Implicit conversion is done by the compiler:
+1. When there is no loss of information if the conversion is done
+2. If there is no possibility of throwing exceptions during the conversion
+-----------------------------------------------------------------
+string str="100";
+int i=parse(str);
+console.writeline(i);
+--------------------------o/p: 100
+string str="100st";
+int i=parse(str);
+console.writeline(i);
+--------------------------o/p: EXCEPTION (alphabet cant be converted)
+***********************ret type: INT
+-------------------------------------------------------------------------
+Difference between Parse and TryParse
+1. If the number is in a string format you have 2 options - Parse() and TryParse() 
+2. Parse() method throws an exception if it cannot parse the value, whereas TryParse() returns a bool indicating whether it succeeded or failed.
+3. Use Parse() if you are sure the value will be valid, otherwise use TryParse()
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,159 @@
+-----------------------------------------METHOD HIDING---------------------------------------------------------
+using System;
+using System.Net.Http;
+
+namespace ConsoleApp3
+{
+    class parent
+    {
+        public string fn;
+        public string ln;
+       
+        public void concat() //HIDDEN under CHILD's concat Method
+        {
+            Console.WriteLine("from parent");
+            Console.WriteLine(fn+" "+ln);
+            Console.ReadKey();
+        }
+    }
+
+    class child : parent
+    {
+        public new void concat() //Having same METHOD NAME in both CHILD & PARENT, Its natural, that CHILD GONNA HIDE parent's method
+        {
+            Console.WriteLine("from child");
+            Console.WriteLine(fn + " " + ln);
+            Console.ReadKey();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           child cd=new child();
+            cd.fn = "Soham";
+            cd.ln = "roy";
+            cd.concat();
+        }
+    }
+}
+****************************************************************************
+OUTPUT
+****************************************************************************
+from child 
+Soham roy
+-------------------------------------------------------------------------------------------------------------
+Solving the HIDING problem
+-------------------------------------------------------------------------------------------------------------
+using System;
+using System.Net.Http;
+
+namespace ConsoleApp3
+{
+    class parent
+    {
+        public string fn;
+        public string ln;
+       
+        public void concat()
+        {
+            Console.WriteLine("from parent");
+            Console.WriteLine(fn+" "+ln);
+            Console.ReadKey();
+        }
+    }
+
+    class child : parent
+    {
+        public new void concat()           //is used just to hide PARENT's METHOD
+        {
+            Console.WriteLine("from child");
+            Console.WriteLine(fn + " " + ln);
+            Console.ReadKey();
+
+            base.concat(); //refers to the PARENT's concat METHOD
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           child cd=new child();
+            cd.fn = "Soham";
+            cd.ln = "roy";
+            cd.concat();
+        }
+    }
+}
+****************************************************************************
+OUTPUT
+****************************************************************************
+from child
+Soham roy
+from parent
+Soham roy
+-------------------------------------------------------------------------------------------------------------
+Solving the HIDING problem : PROCESS 2
+-------------------------------------------------------------------------------------------------------------
+using System;
+using System.Net.Http;
+
+namespace ConsoleApp3
+{
+    class parent
+    {
+        public string fn;
+        public string ln;
+       
+        public void concat()
+        {
+            Console.WriteLine("from parent");
+            Console.WriteLine(fn+" "+ln);
+            Console.ReadKey();
+        }
+    }
+
+    class child : parent
+    {
+        public new void concat()
+        {
+            Console.WriteLine("from child");
+            Console.WriteLine(fn + " " + ln);
+            Console.ReadKey();
+
+            //base.concat();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           child cd=new child();
+            cd.fn = "Soham";
+            cd.ln = "roy";
+            cd.concat();
+
+            parent cd2 = new child();   //a child class can contain all needs of a parent class, BUT A PARENT CLASS can't fullfill all the needs of CHILDS, THAT IS WHY WHILE [PARENT CD=NEW CHILD() - is legal, and CHILD CD=NEW PARENT is illigal]
+            cd2.fn = "Soham";
+            cd2.ln = "roy";
+            cd2.concat();
+        }
+    }
+}
+****************************************************************************
+OUTPUT
+****************************************************************************
+from child
+Soham roy
+from parent
+Soham roy
+
+
+
+
+
+
+
+
+
+

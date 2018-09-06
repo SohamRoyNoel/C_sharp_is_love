@@ -1,0 +1,129 @@
+**************************************************************************************************************
+Two INTERFACE have SAME NAMED METHOD
+& BOTH are INHERITED by a same class
+and gives the implementation:-
+
+that case;
+**************************************************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    interface I1
+    {
+        void rabbit();
+    }
+
+    interface I2
+    {
+        void rabbit();
+    }
+    class Program : I1, I2
+    {
+        public void rabbit()
+        {
+            Console.WriteLine("from i1");
+            Console.ReadKey();
+        }
+        static void Main(string[] args)
+        {
+            Program ob=new Program();
+            ((I1)ob).rabbit();
+            ((I2)ob).rabbit();
+        }
+    }
+}
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+from i1
+from i1
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+*************************************************************************
+A solution to CONTROL where A same NAME, SIGNATURE of a method can be same
+but
+implementation will be different
+IN A SAME CLASS
+EXPLICIT INTERFACE IMPLEMENTATION : Makes private
+**************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    interface I1
+    {
+        void rabbit();
+    }
+
+    interface I2
+    {
+        void rabbit();
+    }
+    class Program : I1, I2
+    {
+        void I1.rabbit()         //NO access modifiers
+        {
+            Console.WriteLine("from method i1");
+            Console.ReadKey();
+        }
+
+        void I2.rabbit()
+        {
+            Console.WriteLine("from i2");
+            Console.ReadKey();
+        }
+        static void Main(string[] args)
+        {
+            Program ob=new Program();
+            ((I1)ob).rabbit();
+            ((I2)ob).rabbit();
+        }
+    }
+}
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+from method i1
+from i2
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+**************************************************************************
+DEFAULT EXPLICIT INTERFACE IMPLEMENTATION
+**************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    interface I1
+    {
+        void rabbit();
+    }
+
+    interface I2
+    {
+        void rabbit();
+    }
+    class Program : I1, I2
+    {
+        public void rabbit()  //making default, by ADDING PUBLIC + ELEMINATING <interface>.<method name>
+        {
+            Console.WriteLine("from method i1");
+            Console.ReadKey();
+        }
+
+        void I2.rabbit() //keeping as EXPLICIT
+        {
+            Console.WriteLine("from i2");
+            Console.ReadKey();
+        }
+        static void Main(string[] args)
+        {
+            Program ob=new Program();
+            ob.rabbit();                         //THIS TIME IF SOMEONE DOES SO, he could get a DEFAULT ACCESS.
+            ((I2)ob).rabbit();
+        }
+    }
+}

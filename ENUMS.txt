@@ -1,0 +1,99 @@
+****************************************************************************************************
+A PROGRAMME where,
+1. user inputs their NAME & GENDER
+2. Prints all the names.
+3. IT IS DOCUMENTED THAT {1 : FEMALE; 2: MALE; 3:UNKNOWN)
+	ALL ARE DONE WITHOUT USING ***enums***
+****************************************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            takecustomer[] ob = new takecustomer[4];
+            ob[0] = new takecustomer { name = "Ivy", gender = 1 };
+            ob[1] = new takecustomer { name = "Soham", gender = 2 };
+            ob[2] = new takecustomer { name = "Sreeparna K", gender = 3 };
+            ob[3] = new takecustomer { name = "Pallavi", gender = 1 };
+
+            foreach(takecustomer cus in ob)
+            {
+                Console.WriteLine("Name = {0}" + " " + "Gender = {1}", cus.name,Program.change(cus.gender));
+                Console.ReadKey();
+            }
+        }
+        public static string change(int gen)
+        {
+            if (gen == 1)
+                return "Female";
+            else if (gen == 2)
+                return "Male";
+            else
+                return "Unknown";
+        }
+    }
+    class takecustomer
+    {
+        public string name { get; set; }
+        public int gender { get; set; }
+    }
+}
+****************************************************************************************************
+USING ENUMS
+****************************************************************************************************
+
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            takecustomer[] ob = new takecustomer[4];
+            ob[0] = new takecustomer { name = "Ivy", gender = gender.FEMALE };  //5. call as per THE ENUM
+            ob[1] = new takecustomer { name = "Soham", gender = gender.MALE };
+            ob[2] = new takecustomer { name = "Sreeparna K", gender = gender.UNKNOWN };
+            ob[3] = new takecustomer { name = "Pallavi", gender = gender.FEMALE };
+
+            foreach(takecustomer cus in ob)
+            {
+                Console.WriteLine("Name = {0}" + " " + "Gender = {1}", cus.name,Program.change(cus.gender));
+                Console.ReadKey();
+            }
+        }
+        public static string change(gender gen) //3. CHANGE THE PARAMETER's DATATYPE <as per the DATATYPE of ENUM>
+        {
+            if (gen == gender.FEMALE) //4. CALL AS <name on enum method>.<instance>
+                return "Female";
+            else if (gen == gender.MALE)
+                return "Male";
+            else
+                return "Unknown";
+        }
+    }
+    public enum gender // 1. CREATE AN ENUM METHOD
+    {
+        MALE,
+        FEMALE,
+        UNKNOWN
+    }
+    class takecustomer
+    {
+        public string name { get; set; }
+        public gender gender { get; set; }  //2. MAKE THE PROPERTY AS <the same datatype of ENUM>
+    }
+}

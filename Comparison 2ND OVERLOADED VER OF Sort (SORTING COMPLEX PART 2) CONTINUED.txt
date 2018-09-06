@@ -1,0 +1,117 @@
+************************************************************************************************************************************
+We are using 2ND overloaded version of the .Sort method :::::::::::::::::::::: that is Comparison(<function having same signature>) :::::::::::::::::::; RETURNS DELEGATE
+************************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, money = 50 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 102, money = 85 };
+            Customer customer3 = new Customer() { name = "Sreeparna k", id = 115, money = 51 };
+            Customer customer4 = new Customer() { name = "Puja", id = 108, money = 63 };
+            
+            List<Customer> obn = new List<Customer>(4);
+            obn.Add(customer1);
+            obn.Add(customer2);
+            obn.Add(customer3);
+            obn.Add(customer4);
+
+            foreach(Customer cc in obn)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Money = {2}", cc.name, cc.id, cc.money);
+            }
+
+            Console.WriteLine();
+            Comparison<Customer> mydelegate = new Comparison<Customer>(Compare); //2. put Comparison<Obj>, and put an instance of it, AND ut a function TARGET (point 1);
+            obn.Sort(mydelegate);  //now PASS THE DELEGATE INSTANCE IN THE .Sort METHOD
+
+            foreach(Customer cc in obn)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Money = {2}", cc.name, cc.id, cc.money);
+            }
+
+            Console.ReadKey();
+        }
+        public static int Compare(Customer x, Customer y)    // 1. Add a function having same signature of Comparison() that can be found in THE DEFINITION OF .Sort
+        {
+            return x.id.CompareTo(y.id);
+        }
+    }
+
+    class Customer  //gets all value from IComparable
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int money { get; set; }
+    }
+}
+--------------------------------------------------------
+Name = Soham, Id = 101, Money = 50
+Name = Ivy, Id = 102, Money = 85
+Name = Sreeparna k, Id = 115, Money = 51
+Name = Puja, Id = 108, Money = 63
+
+Name = Soham, Id = 101, Money = 50
+Name = Ivy, Id = 102, Money = 85
+Name = Puja, Id = 108, Money = 63
+Name = Sreeparna k, Id = 115, Money = 51
+---------------------------------------------------------
+************************************************************************************************************************************
+USING lAMBDA FUNCTION AND DELEGATE in a sequence
+************************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, money = 50 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 102, money = 85 };
+            Customer customer3 = new Customer() { name = "Sreeparna k", id = 115, money = 51 };
+            Customer customer4 = new Customer() { name = "Puja", id = 108, money = 63 };
+            
+            List<Customer> obn = new List<Customer>(4);
+            obn.Add(customer1);
+            obn.Add(customer2);
+            obn.Add(customer3);
+            obn.Add(customer4);
+
+            foreach(Customer cc in obn)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Money = {2}", cc.name, cc.id, cc.money);
+            }
+
+            //obn.Sort(delegate(Customer c1, Customer c2) { return c1.id.CompareTo(c2.id); });
+            obn.Sort((x, y) => x.id.CompareTo(y.id));
+
+            Console.WriteLine();
+            foreach(Customer cc in obn)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Money = {2}", cc.name, cc.id, cc.money);
+            }
+
+            Console.ReadKey();
+        }
+    }
+
+    class Customer  //gets all value from IComparable
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int money { get; set; }
+    }
+}

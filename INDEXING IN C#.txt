@@ -1,0 +1,255 @@
+************************************************************************
+INDEXING
+************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    public class FailsoftArray
+    {
+        private int[] a;
+        public bool err;
+
+        public int b;
+
+        public FailsoftArray(int size)
+        {
+            a = new int[size];
+            b = size;
+        }
+
+        public int this[int index]
+        {
+            get
+            {
+                if (ok(index))
+                {
+                    err = false;
+                    return a[index];
+                }
+                else
+                {
+                    err = true;
+                    return 0;
+                }
+            }
+            set
+            {
+                if (ok(index))
+                {
+                    a[index] = value;
+                    err = false;
+                }
+                else
+                {
+                    err = true;
+                }
+            }
+
+        }
+
+        public bool ok(int index)
+        {
+            if (index >= 0 && index < b)
+                return true;
+            else
+                return false;
+        }
+    }
+
+
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            FailsoftArray ob = new FailsoftArray(5);
+            int x;
+
+            for (int i = 0; i < (ob.b * 2); i++)
+            {
+                ob[i] = i * 10;
+            }
+
+            for (int i = 0; i < (ob.b * 2); i++)
+            {
+                x = ob[i];
+                if (x != -1)
+                {
+                    Console.WriteLine(x + " ");
+                }
+            }
+
+            Console.WriteLine();
+
+            for (int i = 0; i < (ob.b * 2); i++)
+            {
+                if (i > ob.b)
+                {
+                    Console.WriteLine("failsoft[{0}] is out of range", i);
+                }
+            }
+
+            Console.ReadKey();
+        }
+  
+    }
+}
+***************************
+OUTPUT
+****************************
+0
+10
+20
+30
+40
+0
+0
+0
+0
+0
+
+failsoft[6] is out of range
+failsoft[7] is out of range
+failsoft[8] is out of range
+failsoft[9] is out of range
+*************************************************************************
+INDEXERS CAN BE OVERLOADED
+*************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    public class FailsoftArray
+    {
+        private int[] a;
+        public bool err;
+
+        public int b;
+
+        public FailsoftArray(int size)     //REGULAR IMPLEMENTATION
+        {
+            a = new int[size];
+            b = size;
+        }
+
+          public int this[int index]
+        {
+            get
+            {
+                if (ok(index))
+                {
+                    err = false;
+                    return a[index];
+                }
+                else
+                {
+                    err = true;
+                    return 0;
+                }
+            }
+            set
+            {
+                if (ok(index))
+                {
+                    a[index] = value;
+                    err = false;
+                }
+                else
+                {
+                    err = true;
+                }
+            }
+
+        public int this[float ind]   //OVERLOADED IMPLEMENTATION
+        {
+            get
+            {
+                int index;
+               
+                if((ind-(int)ind) <0.5)
+ 	     index=(int)ind;
+                else
+ 	     index=(int)ind + 1;
+
+                if (ok(index))
+                {
+                    err = false;
+                    return a[index];
+                }
+                else
+                {
+                    err = true;
+                    return 0;
+                }
+            }
+            set
+            {
+
+	if((ind-(int)ind) <0.5)
+ 	     index=(int)ind;
+                else
+ 	     index=(int)ind + 1;
+
+                if (ok(index))
+                {
+                    a[index] = value;
+                    err = false;
+                }
+                else
+                {
+                    err = true;
+                }
+            }
+
+        }
+
+        public bool ok(int index)
+        {
+            if (index >= 0 && index < b)
+                return true;
+            else
+                return false;
+        }
+    }
+
+
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            FailsoftArray ob = new FailsoftArray(5);
+            int x;
+
+            for (int i = 0; i < (ob.b * 2); i++)
+            {
+                ob[i] = i * 10;
+            }
+
+            for (int i = 0; i < (ob.b * 2); i++)
+            {
+                x = ob[i];
+                if (x != -1)
+                {
+                    Console.WriteLine(x + " ");
+                }
+            }
+
+            Console.WriteLine();
+
+            for (int i = 0; i < (ob.b * 2); i++)
+            {
+                if (i > ob.b)
+                {
+                    Console.WriteLine("failsoft[{0}] is out of range", i);
+                }
+            }
+
+            Console.ReadKey();
+        }
+  
+    }
+}

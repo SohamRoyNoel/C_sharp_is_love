@@ -1,0 +1,288 @@
+using System;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static int total = 0;  //SHARED VARIABLE
+
+        public static void Main(string[] args)
+        {
+            Thread t1 = new Thread(add);
+            Thread t2 = new Thread(add);
+            Thread t3 = new Thread(add);
+
+            t1.Start();
+            t2.Start();
+            t3.Start();
+
+            t1.Join();
+            t2.Join();
+            t3.Join();
+
+            Console.WriteLine(total);
+
+            Console.ReadKey();
+        }
+
+        public static void add()
+        {
+            for (int i = 0; i < 10000000; i++)
+            {
+                total++;
+            }
+        }
+    }
+}
+***********************************this threading system will never give you same and perfect result**************************************************************
+*******************************How to prevent?
+*******************************1. interlocked.increment() ||||||||||||||||||| 2. Lock()
+1>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Interlocking Method
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static int total = 0;
+        public static void Main(string[] args)
+        {
+            Thread t1 = new Thread(add);
+            Thread t2 = new Thread(add);
+            Thread t3 = new Thread(add);
+
+            t1.Start();
+            t2.Start();
+            t3.Start();
+
+            t1.Join();
+            t2.Join();
+            t3.Join();
+
+            Console.WriteLine(total);
+
+            Console.ReadKey();
+        }
+
+        public static void add()
+        {
+            for (int i = 0; i < 10000000; i++)
+            {
+                Interlocked.Increment(ref total);
+            }
+        }
+    }
+}
+====================================RESULT IS 30000000 (10000000 * 3 THREADS)
+2>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Locking Mechanism
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static int total = 0;
+        public static void Main(string[] args)
+        {
+            Thread t1 = new Thread(add);
+            Thread t2 = new Thread(add);
+            Thread t3 = new Thread(add);
+
+            t1.Start();
+            t2.Start();
+            t3.Start();
+
+            t1.Join();
+            t2.Join();
+            t3.Join();
+
+            Console.WriteLine(total);
+
+            Console.ReadKey();
+        }
+ 
+        static object locked = new object();   //create a lock object at class level
+
+        public static void add()
+        {
+            for (int i = 0; i < 10000000; i++)
+            {
+                lock(locked)
+                {
+                    total++;
+                }
+            }
+        }
+    }
+}
+
+*********************************************************************************************************************************************
+checking WHICH ONE IS BETTER? INTERLOCKING OR LOCKED ?
+*********************************************************************************************************************************************
+locked method takes much time elapse;
+
+using System;
+using System.Threading;
+using System.Diagnostics;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static int total = 0;
+        public static void Main(string[] args)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            Thread t1 = new Thread(add);
+            Thread t2 = new Thread(add);
+            Thread t3 = new Thread(add);
+
+            t1.Start();
+            t2.Start();
+            t3.Start();
+
+            t1.Join();
+            t2.Join();
+            t3.Join();
+
+            Console.WriteLine(total);
+            sw.Stop();
+            Console.WriteLine(sw.ElapsedTicks);
+
+            Console.ReadKey();
+        }
+
+        static object locked = new object();
+
+        public static void add()
+        {
+            for (int i = 0; i < 10000000; i++)
+            {
+                lock(locked)   //USING LOCKED METHOD
+                {
+                    total++;
+                }
+            }
+        }
+    }
+}
+
+---------------------------------------OUTPUTS-------------------------------
+TOTAL TIME = 30000000, TIME ELAPSED = 4206751
+
+TOTAL TIME = 30000000, TIME ELAPSED = 3965245
+
+TOTAL TIME = 30000000, TIME ELAPSED = 4222568
+-----------------------------------------------------------------------------------
+using System;
+using System.Threading;
+using System.Diagnostics;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static int total = 0;
+        public static void Main(string[] args)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            Thread t1 = new Thread(add);
+            Thread t2 = new Thread(add);
+            Thread t3 = new Thread(add);
+
+            t1.Start();
+            t2.Start();
+            t3.Start();
+
+            t1.Join();
+            t2.Join();
+            t3.Join();
+
+            sw.Stop();
+            Console.WriteLine("TOTAL TIME = {0}, TIME ELAPSED = {1}", total, sw.ElapsedTicks); //tick : 1 millisec contains 10000 ticks
+
+            Console.ReadKey();
+        }
+
+        //static object locked = new object();
+
+        public static void add()
+        {
+            for (int i = 0; i < 10000000; i++)
+            {
+                Interlocked.Increment(ref total);
+            }
+        }
+    }
+}
+---------------------------------------OUTPUTS-------------------------------
+TOTAL TIME = 30000000, TIME ELAPSED = 2739326
+
+TOTAL TIME = 30000000, TIME ELAPSED = 2918054
+
+TOTAL TIME = 30000000, TIME ELAPSED = 2365493
+-----------------------------------------------------------------------------------
+
+in case of INTERLOCKING METHOD the time elapse is much much lower than Locked: Actually Locked method locks all the THREADS, that is the reason why Lockmechanism takes much time
+***************************************************************************************************************
+Timespan method()
+***************************************************************************************************************
+using System;
+using System.Threading;
+using System.Diagnostics;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static int total = 0;
+        public static void Main(string[] args)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            Thread t1 = new Thread(add);
+            Thread t2 = new Thread(add);
+            Thread t3 = new Thread(add);
+
+            t1.Start();
+            t2.Start();
+            t3.Start();
+
+            t1.Join();
+            t2.Join();
+            t3.Join();
+
+            sw.Stop();
+            //Console.WriteLine("TOTAL TIME = {0}, TIME ELAPSED = {1}", total, sw.ElapsedTicks);
+
+            Console.WriteLine(TimeSpan.TicksPerHour); // 36000000000
+            Console.WriteLine(TimeSpan.TicksPerMinute);  // 600000000
+            Console.WriteLine(TimeSpan.TicksPerSecond);   // 10000000
+            Console.WriteLine(TimeSpan.MinValue);     //  -10675199.02:48:05.4775808
+            Console.WriteLine(TimeSpan.MaxValue);    //  10675199.02:48:05.4775807
+            
+
+
+            Console.ReadKey();
+        }
+
+        //static object locked = new object();
+
+        public static void add()
+        {
+            for (int i = 0; i < 10000000; i++)
+            {
+                Interlocked.Increment(ref total);
+            }
+        }
+    }
+}

@@ -1,0 +1,100 @@
+*********************************************************
+with out async
+*********************************************************************
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+using System.Threading;
+
+namespace async
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private int charcount()
+        {
+            int count = 0;
+            using (StreamReader rd = new StreamReader("C:\\Users\\HP\\Documents\\My Web Sites\\async_test.txt"))
+            {
+                string content = rd.ReadToEnd();
+                count = content.Length;
+                Thread.Sleep(7000);
+            }
+            return count;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            label1.Text = "processing the file";
+            int x=charcount();
+            label1.Text = x.ToString();
+        }
+    }
+}
+-----------------------------------------------------
+1. you cant move window untill the process is done.
+2. you cant resize the window while the processing is active.
+3. the text "processing the file" will never be shown
+---------------------------------------------------------------------
+**********************************************************************************
+using async
+**********************************************************************************
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+using System.Threading;
+
+namespace async
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private int charcount()
+        {
+            int count = 0;
+            using (StreamReader rd = new StreamReader("C:\\Users\\HP\\Documents\\My Web Sites\\async_test.txt"))
+            {
+                string content = rd.ReadToEnd();
+                count = content.Length;
+                Thread.Sleep(7000);
+            }
+            return count;
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            Task<int> t = new Task<int>(charcount);
+            t.Start();
+            label1.Text = "processing the file";
+            int x = await t;
+            label1.Text = x.ToString();
+        }
+    }
+}
+***************************************
+async : an asynchronous method
+await : the suspention point
+**await signas the process cant done untill the async is completed.
+**************************************

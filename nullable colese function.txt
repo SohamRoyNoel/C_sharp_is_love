@@ -1,0 +1,45 @@
+In C# types  are divided into 2 broad categories.
+Value Types  - int, float, double, structs, enums etc
+Reference Types – Interface, Class, delegates, arrays etc
+
+Nullable types bridge the differences between C# types and Database types
+
+Program without using NULL coalescing operator
+using System;
+class Program
+{
+    static void Main()
+    {
+        int AvailableTickets;
+        int? TicketsOnSale = null;
+
+        if (TicketsOnSale == null)
+        {
+            AvailableTickets = 0;
+        }
+        else
+        {
+            AvailableTickets = (int)TicketsOnSale;
+        }
+
+        Console.WriteLine("Available Tickets={0}", AvailableTickets);
+    }
+}
+
+
+
+The above program is re-written using NULL coalescing operator
+using System;
+class Program
+{
+    static void Main()
+    {
+        int AvailableTickets;
+        int? TicketsOnSale = null;
+
+        //Using null coalesce operator ??
+        AvailableTickets = TicketsOnSale ?? 0;
+
+        Console.WriteLine("Available Tickets={0}", AvailableTickets);
+    }
+}

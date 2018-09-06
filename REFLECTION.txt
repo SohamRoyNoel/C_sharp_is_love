@@ -1,0 +1,166 @@
+************************************************************************************
+EARLY BINDING: when you know about a class initially
+LATE BINDING: when we have no knowledge about a CLASS at runtime, but we need to initialize that
+*************************************************************************************
+REFLECTION is a property that checks the TYPE OF a class or method at RUNTIME
+*************************************************************************************
+EXAMPLES OF REFLECTIONS:
+*******************************
+
+using System;
+using System.Reflection;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Type ty = Type.GetType("ConsoleApp2.christmas");
+            Console.WriteLine("Full name = {0}", ty.FullName);
+            Console.WriteLine("Name = {0}", ty.Name);
+            Console.WriteLine("Namespace = {0}", ty.Namespace);
+            Console.WriteLine();
+
+            //properties in christmas
+            PropertyInfo[] pop = ty.GetProperties();
+            Console.WriteLine("PROPERTIES");
+            foreach(PropertyInfo pp in pop)
+            {
+                Console.WriteLine("name= {0}", pp.Name);
+                Console.WriteLine("type= {0}", pp.PropertyType.Name);
+            }
+
+            Console.WriteLine();
+            //methods in the class
+            MethodInfo[] med= ty.GetMethods();
+            Console.WriteLine("METHODS");
+            foreach(MethodInfo mm in med)
+            {
+                Console.WriteLine("Name = {0}", mm.Name);
+                Console.WriteLine();
+                Console.WriteLine("type = {0}", mm.ReturnParameter.Name); //fetches the parameter info of a method, since we dont have any parameterised method, it shows null
+                Console.WriteLine();
+                Console.WriteLine("return type = {0}", mm.ReturnType.Name);
+            }
+
+
+            Console.WriteLine();
+            Console.WriteLine();
+            //consturctor
+            ConstructorInfo[] cont = ty.GetConstructors();
+            Console.WriteLine("CONSTRUCTOR");
+            foreach (ConstructorInfo ci in cont)
+            {
+                Console.WriteLine("Name = {0}", ci.ReflectedType.Name); //gives name of constructors
+                Console.WriteLine(ci.Name); //.ctor means the last 4 letters in constructor
+            }
+
+            Console.ReadLine();
+        }
+    }
+    public class christmas
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+
+        public christmas(string nm, int ivy)
+        {
+            this.name = nm;
+            this.id = ivy;
+        }
+        public christmas()
+        {
+            this.name = string.Empty;
+            this.id = -1;
+        }
+
+        public void anjelina()
+        {
+            Console.WriteLine("id= {0}", this.id);
+        }
+
+        public void emma()
+        {
+            Console.WriteLine("name = {0}", this.name);
+        }
+    }
+}
+******************************************************
+OUTPUTS
+******************************************************
+Full name = ConsoleApp2.christmas
+Name = christmas
+Namespace = ConsoleApp2
+
+PROPERTIES
+name= name
+type= String
+name= id
+type= Int32
+
+METHODS
+Name = get_name
+
+type =
+
+return type = String
+Name = set_name
+
+type =
+
+return type = Void
+Name = get_id
+
+type =
+
+return type = Int32
+Name = set_id
+
+type =
+
+return type = Void
+Name = anjelina
+
+type =
+
+return type = Void
+Name = emma
+
+type =
+
+return type = Void
+Name = ToString
+
+type =
+
+return type = String
+Name = Equals
+
+type =
+
+return type = Boolean
+Name = GetHashCode
+
+type =
+
+return type = Int32
+Name = GetType
+
+type =
+
+return type = Type
+
+
+CONSTRUCTOR
+Name = christmas
+.ctor
+Name = christmas
+.ctor
+
+***********************************************************************************
+USE OF REFLECTIONS:
+***********************************************************************************
+1. when we pull a button in windows app we get properties: that is a reflaction
+2. late bindings
+3. give a choise to end user to choose any particular INTERFACE.

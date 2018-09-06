@@ -1,0 +1,70 @@
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3   //belongs to Icomparable, that is why a list of nos can be sorted where as A COMPLEX TIME CANT EVER BE SHORTED USING THE PRE DEFINED FUNCTIONS (DONE AT PART 2)
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            List<int> nos = new List<int>() { 5, 7, 6, 2, 3, 3, 0, -1, -8 };
+
+            Console.WriteLine("UnShorted");
+            foreach (int c in nos)
+            {
+                Console.WriteLine(c);
+            }
+
+            Console.WriteLine("Shorted");
+            nos.Sort();
+            foreach (int c in nos)
+            {
+                Console.WriteLine(c);
+            }
+
+            Console.WriteLine("Reversed");
+            nos.Reverse();
+            foreach (int c in nos)
+            {
+                Console.WriteLine(c);
+            }
+
+           
+            Console.ReadKey();
+        }
+    }
+}
+------------------------------------------------
+UnShorted
+5
+7
+6
+2
+3
+3
+0
+-1
+-8
+Shorted
+-8
+-1
+0
+2
+3
+3
+5
+6
+7
+Reversed
+7
+6
+5
+3
+3
+2
+0
+-1
+-8

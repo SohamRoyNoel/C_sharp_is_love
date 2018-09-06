@@ -1,0 +1,99 @@
+**********************************************************************
+abstract class (is AN INCOMPLETE CLASS)
+**********************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    abstract class makemytrip //abstract class only needs DECLARATION no IMPLEMENTATION
+    {
+        public abstract void print();
+    }
+    class Program : makemytrip //THE CLASS that inherits from ABSTRACT CLASS, has to provide implementation
+    {			//or error will appear.
+        static void Main(string[] args)
+        {
+            
+        }
+    }
+}
+			//build error//
+********************************************************************************************************************************************
+another case   //HERE YOULL NEVER GET AN ERROR
+********************************************************************************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    abstract class makemytrip        //ABSTRACT CLASS
+    {
+        public abstract void print();    //DECLARATION
+    }
+    abstract class Program : makemytrip  //IT INHERITS FROM base class, SO IT WILL ALWAYS HAVEA A ABSTRACT CLASS
+    {
+        static void Main(string[] args)
+        {
+            
+        }
+    }
+}
+			//NO ERROR
+********************************************************************************************************************************************
+Abstract class MAY CONTAIN ABSTRACT MEMBER or NOT. like bellow
+********************************************************************************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    abstract class makemytrip
+    {
+        public void print()
+        {
+	//gave implementation but NO ERRORS..            
+        }
+    }
+    class Program : makemytrip
+    {
+        static void Main(string[] args)
+        {
+            
+        }
+    }
+}
+********************************************************************************************************************************************
+abstract class can't be SEALED, because an abstract class can be INHERITED by other clss
+that CLASS has to give THE IMPLEMETATION.
+IF THAT IS SEALED NO CLASS COULD INHERIT IT.
+********************************************************************************************************************************************
+*************************************************************************
+IMPLEMENTATION OF abstract class
+**************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    abstract class makemytrip
+    {
+        public abstract void print(); //make an abstract method
+
+    }
+    class Program : makemytrip   //inherit abstract class
+    { 
+        public override void print() //OVERRIDE method is needed
+        {
+            
+        }
+        static void Main(string[] args)
+        {
+            
+        }
+    }
+}

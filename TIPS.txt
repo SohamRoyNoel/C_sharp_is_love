@@ -1,0 +1,26 @@
+structure: VALUE TYPE
+CLASS. INTERFACE: REFERANCE TYPE
+********************************************************************************
+class, structure, enum, delegates --> types
+field, properties, constructors, method -->type members
+********************************************************************************
+5 types of 	ACCESS MODIFIERS
+1. PUBLIC :accessable from any class.
+2. PROTECTED: accessable from that particular class.
+3. PRIVATE: accessable from the class + IF that class INHERITS from A BASE CLASS HAVING an datatype with PROTECTED-->will be visible here.
+4. INTERNAL: accessable from an ASSEMBLY, where it is initiated.
+5. PROTECTED INTERNAL: 
+			1.add A referrence to the child assembly
+			2. add a namespace.
+			3. inherit THE PARENT ASSEMBLY into CHILD
+			4.call the class using BASE
+	(a PROTECTED INTERNAL CAN BE ACCESSED FROM ONLY THE CLASS THAT IS INHERITING IT)
+********************************************************************************
+INTERNAL & PROTECTED INTERNAL are only for TYPE MODIFIERS
+WHERE
+PUBLIC, PROTECTED, PRIVATE IS for type
+<check vid 51>
+********************************************************************************
+********************************************************************************
+********************************************************************************
+********************************************************************************

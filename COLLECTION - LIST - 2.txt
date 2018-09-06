@@ -1,0 +1,323 @@
+You're wishin to add a new list into an old list
+********************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 90, type="Due" };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 500, type="Paid" };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350, type="No money" };
+            Customer customer4 = new Customer() { name = "Amrita", id = 106, pay = 200, type = "Due" };
+            Customer customer5 = new Customer() { name = "Ankita", id = 110, pay = 550, type = "Advance" };
+
+            List<Customer> cup = new List<Customer>();
+            cup.Add(customer1);
+            cup.Add(customer2);
+            cup.Add(customer3);
+
+            List<Customer> plate = new List<Customer>();
+            plate.Add(customer4);
+            plate.Add(customer5);
+
+            cup.AddRange(plate);
+
+            foreach(Customer c in cup)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Pay = {2}, Type = {3}", c.name, c.id, c.pay, c.type);
+            }
+
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+        public string type { get; set; }
+    }
+    
+}
+------------------------------------------------------------------------
+Name = Soham, Id = 101, Pay = 90, Type = Due
+Name = Ivy, Id = 103, Pay = 500, Type = Paid
+Name = Sreeparna, Id = 105, Pay = 350, Type = No money
+Name = Amrita, Id = 106, Pay = 200, Type = Due
+Name = Ankita, Id = 110, Pay = 550, Type = Advance
+-------------------------------------------------------------------------
+**************************************************************************************************************************************
+FERCHING the value AS A form of list, BY ANY PARTICULAR RANGE (Obj.GetRange(<start index, end index>)
+**************************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 90, type="Due" };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 500, type="Paid" };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350, type="No money" };
+            Customer customer4 = new Customer() { name = "Amrita", id = 106, pay = 200, type = "Due" };
+            Customer customer5 = new Customer() { name = "Ankita", id = 110, pay = 550, type = "Advance" };
+
+            List<Customer> cup = new List<Customer>();
+            cup.Add(customer1);
+            cup.Add(customer2);
+            cup.Add(customer3);
+
+            List<Customer> plate = new List<Customer>();
+            plate.Add(customer4);
+            plate.Add(customer5);
+
+            cup.AddRange(plate);
+
+            List<Customer> getcus= cup.GetRange(1, 3); //start index , count as much
+
+            foreach(Customer c in getcus)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Pay = {2}, Type = {3}", c.name, c.id, c.pay, c.type);
+            }
+
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+        public string type { get; set; }
+    }
+    
+}
+**************************************************************************************************************************************
+.IndexRange(<index value> , <list name>)  ----------ONLY ALLOWS list name (ex: cup, plate)
+**************************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 90, type="Due" };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 500, type="Paid" };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350, type="No money" };
+            Customer customer4 = new Customer() { name = "Amrita", id = 106, pay = 200, type = "Due" };
+            Customer customer5 = new Customer() { name = "Ankita", id = 110, pay = 550, type = "Advance" };
+
+            List<Customer> cup = new List<Customer>();
+            cup.Add(customer1);
+            cup.Add(customer2);
+            cup.Add(customer3);
+
+            List<Customer> plate = new List<Customer>();
+            plate.Add(customer4);
+            plate.Add(customer5);
+
+            cup.InsertRange(0, plate);  // oth index, that means THE OBJECT ASSOCIATED EITH plate  WILL COME AT TOP ,,,,AND IF YOU WANT TO PUT THEM AT LAST POSITION, just mention it.
+
+            foreach(Customer c in cup)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Pay = {2}, Type = {3}", c.name, c.id, c.pay, c.type);
+            }
+
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+        public string type { get; set; }
+    }
+    
+}
+------------------------------------------------------------------------------------
+Name = Amrita, Id = 106, Pay = 200, Type = Due
+Name = Ankita, Id = 110, Pay = 550, Type = Advance
+Name = Soham, Id = 101, Pay = 90, Type = Due
+Name = Ivy, Id = 103, Pay = 500, Type = Paid
+Name = Sreeparna, Id = 105, Pay = 350, Type = No money
+------------------------------------------------------------------------------------
+**************************************************************************************************************************************
+.Remove(<object>) ----------------removes one at a time
+**************************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 90, type="Due" }; //0
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 500, type="Paid" }; //1
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350, type="No money" }; //2
+            Customer customer4 = new Customer() { name = "Amrita", id = 106, pay = 200, type = "Due" };  //3 
+            Customer customer5 = new Customer() { name = "Ankita", id = 110, pay = 550, type = "Advance" };  //4
+
+            List<Customer> cup = new List<Customer>();
+            cup.Add(customer1);
+            cup.Add(customer2);
+            cup.Add(customer3);
+
+            List<Customer> plate = new List<Customer>();
+            plate.Add(customer4);
+            plate.Add(customer5);
+
+            cup.AddRange(plate);
+
+            cup.Remove(customer4);
+
+            foreach(Customer c in cup)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Pay = {2}, Type = {3}", c.name, c.id, c.pay, c.type);
+            }
+
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+        public string type { get; set; }
+    }
+    
+}
+------------------------------------------------------------------------------------
+Name = Soham, Id = 101, Pay = 90, Type = Due
+Name = Ivy, Id = 103, Pay = 500, Type = Paid
+Name = Sreeparna, Id = 105, Pay = 350, Type = No money
+Name = Ankita, Id = 110, Pay = 550, Type = Advance
+------------------------------------------------------------------------------------
+**************************************************************************************************************************************
+.RemoveAll(<lambda expression>); 
+**************************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 90, type="Due" }; //0
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 500, type="Paid" }; //1
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350, type="No money" }; //2
+            Customer customer4 = new Customer() { name = "Amrita", id = 106, pay = 200, type = "Due" };  //3 
+            Customer customer5 = new Customer() { name = "Ankita", id = 110, pay = 550, type = "Advance" };  //4
+
+            List<Customer> cup = new List<Customer>();
+            cup.Add(customer1);
+            cup.Add(customer2);
+            cup.Add(customer3);
+
+            List<Customer> plate = new List<Customer>();
+            plate.Add(customer4);
+            plate.Add(customer5);
+
+            cup.AddRange(plate);
+
+            cup.RemoveAll(m => m.id > 104);
+
+            foreach(Customer c in cup)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Pay = {2}, Type = {3}", c.name, c.id, c.pay, c.type);
+            }
+
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+        public string type { get; set; }
+    }
+    
+}
+
+**************************************************************************************************************************************
+.RemoveRange(<lambda expression>); 
+**************************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 90, type="Due" }; //0
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 500, type="Paid" }; //1
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350, type="No money" }; //2
+            Customer customer4 = new Customer() { name = "Amrita", id = 106, pay = 200, type = "Due" };  //3 
+            Customer customer5 = new Customer() { name = "Ankita", id = 110, pay = 550, type = "Advance" };  //4
+
+            List<Customer> cup = new List<Customer>();
+            cup.Add(customer1);
+            cup.Add(customer2);
+            cup.Add(customer3);
+
+            List<Customer> plate = new List<Customer>();
+            plate.Add(customer4);
+            plate.Add(customer5);
+
+            cup.AddRange(plate);
+
+            cup.RemoveRange(0, 2);
+
+            foreach(Customer c in cup)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Pay = {2}, Type = {3}", c.name, c.id, c.pay, c.type);
+            }
+
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+        public string type { get; set; }
+    }
+    
+}
+

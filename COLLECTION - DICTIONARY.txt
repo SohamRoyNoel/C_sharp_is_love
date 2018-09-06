@@ -1,0 +1,472 @@
+	DICTIONARY (a dictionary is a collection of key value pair)
+***************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { ID = 101, NAME = "Soham", MONEY = 50000 };
+            Customer customer2 = new Customer() { ID = 102, NAME = "Ivy", MONEY = 25000 };
+            Customer customer3 = new Customer() { ID = 103, NAME = "Puja", MONEY = 15000 };
+
+            Dictionary<int, Customer> dictionaryPeople = new Dictionary<int, Customer>();          //creating dictionary <key, collection name>
+
+            dictionaryPeople.Add(customer1.ID, customer1);  //adding people
+            dictionaryPeople.Add(customer2.ID, customer2);
+            dictionaryPeople.Add(customer3.ID, customer3);
+
+            Console.WriteLine("Name = {0} ID = {1} MONEY = {2}", customer3.NAME, customer3.ID, customer3.MONEY);
+            Console.WriteLine();
+
+            //putting some erronious value here will lead us to KEYNOTFOUND exception
+
+            Customer cc = dictionaryPeople[102];  //Put a datatype Customer, and PASSS THE VALUE THROUGH THE DICTIONARY, to retrive the objects
+            Console.WriteLine("Name = {0} ID = {1} MONEY = {2}", cc.NAME, cc.ID, cc.MONEY);
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public int ID { get; set; }
+        public string NAME { get; set; }
+        public int MONEY { get; set; }
+    }
+}
+-------------------------------
+OUTPUT:
+
+NAME = Soham ID = 101 MONEY = 50000
+
+-------------------------------
+
+*************************************************************************************************************
+GETTING ALL CUSTOMERS IN A LIST AT A TIME
+**************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { ID = 101, NAME = "Soham", MONEY = 50000 };
+            Customer customer2 = new Customer() { ID = 102, NAME = "Ivy", MONEY = 25000 };
+            Customer customer3 = new Customer() { ID = 103, NAME = "Puja", MONEY = 15000 };
+
+            Dictionary<int, Customer> dictionaryPeople = new Dictionary<int, Customer>();
+            dictionaryPeople.Add(customer1.ID, customer1);
+            dictionaryPeople.Add(customer2.ID, customer2);
+            dictionaryPeople.Add(customer3.ID, customer3);
+
+            foreach(KeyValuePair<int, Customer> IVY in dictionaryPeople)  //  foreach(var IVY in dictionaryPeople) //var can also be used in the place of KeyValuePair, IT HOLDS ALL ATA TIME
+            {
+                int nm = IVY.Key;     //KEY = ID
+                Console.WriteLine(nm+ " ------------------------------");
+                Customer cc = IVY.Value;       //VALUE = ALL PROPERTIES OF CUSTOMER
+                Console.WriteLine("Name : {0} Id : {1} Money : {2}", cc.NAME, cc.ID, cc.MONEY);  //RETRIVING ALL AT A TIME
+                Console.ReadKey();
+            }
+        }
+    }
+    class Customer
+    {
+        public int ID { get; set; }
+        public string NAME { get; set; }
+        public int MONEY { get; set; }
+    }
+}
+
+--------------------------------------------------------------
+101 ------------------------------
+Name : Soham Id : 101 Money : 50000
+102 ------------------------------
+Name : Ivy Id : 102 Money : 25000
+103 ------------------------------
+Name : Puja Id : 103 Money : 15000
+--------------------------------------------------------------
+
+*************************************************************************************************************
+LOOPING THROUGH ONLY """""""""""'KEYS"""""""""""""""
+**************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { ID = 101, NAME = "Soham", MONEY = 50000 };
+            Customer customer2 = new Customer() { ID = 102, NAME = "Ivy", MONEY = 25000 };
+            Customer customer3 = new Customer() { ID = 103, NAME = "Puja", MONEY = 15000 };
+
+            Dictionary<int, Customer> dictionaryPeople = new Dictionary<int, Customer>();
+            dictionaryPeople.Add(customer1.ID, customer1);
+            dictionaryPeople.Add(customer2.ID, customer2);
+            dictionaryPeople.Add(customer3.ID, customer3);
+
+            foreach(var IVY in dictionaryPeople)   //INTENTIONALLY USING var INSTADE OF KeyValuePair
+            {
+                int nm = IVY.Key;
+                Console.WriteLine(nm);
+            }
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public int ID { get; set; }
+        public string NAME { get; set; }
+        public int MONEY { get; set; }
+    }
+}
+--------------------------------------------------------------
+101
+102
+103
+--------------------------------------------------------------
+
+*************************************************************************************************************
+LOOPING THROUGH ONLY """""""""""'values"""""""""""""""
+**************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { ID = 101, NAME = "Soham", MONEY = 50000 };
+            Customer customer2 = new Customer() { ID = 102, NAME = "Ivy", MONEY = 25000 };
+            Customer customer3 = new Customer() { ID = 103, NAME = "Puja", MONEY = 15000 };
+
+            Dictionary<int, Customer> dictionaryPeople = new Dictionary<int, Customer>();
+            dictionaryPeople.Add(customer1.ID, customer1);
+            dictionaryPeople.Add(customer2.ID, customer2);
+            dictionaryPeople.Add(customer3.ID, customer3);
+
+            foreach(var IVY in dictionaryPeople)
+            {
+                int cc = IVY.Key;
+                Customer cd = dictionaryPeople[cc];
+                Console.WriteLine("Name = {0} Id = {1} Money = {2}", cd.NAME, cd.ID, cd.MONEY);
+            }
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public int ID { get; set; }
+        public string NAME { get; set; }
+        public int MONEY { get; set; }
+    }
+}
+-----------------------------------------------------
+Name = Soham Id = 101 Money = 50000
+Name = Ivy Id = 102 Money = 25000
+Name = Puja Id = 103 Money = 15000
+-----------------------------------------------------
+*************************************************************************************************************
+IF WE TRY TO ADD SAME ENTRY (having same key value) THAT WILL GIVE YOU """"""""RUN TIME ERROR(argument exception"""""""""""
+NOT A BUILDTIME ERROR..................!  
+**************************************************************************************************************
+
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { ID = 101, NAME = "Soham", MONEY = 50000 };
+            Customer customer2 = new Customer() { ID = 102, NAME = "Ivy", MONEY = 25000 };
+            Customer customer3 = new Customer() { ID = 103, NAME = "Puja", MONEY = 15000 };
+
+            Dictionary<int, Customer> dictionaryPeople = new Dictionary<int, Customer>();
+            dictionaryPeople.Add(customer1.ID, customer1);
+            dictionaryPeople.Add(customer2.ID, customer2);
+            dictionaryPeople.Add(customer3.ID, customer3);
+            dictionaryPeople.Add(customer1.ID, customer1);
+
+        }
+    }
+    class Customer
+    {
+        public int ID { get; set; }
+        public string NAME { get; set; }
+        public int MONEY { get; set; }
+    }
+}
+******************************************************************************************************
+Checking if the key EXIST BEFORE OR NOT
+******************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { ID = 101, NAME = "Soham", MONEY = 50000 };
+            Customer customer2 = new Customer() { ID = 102, NAME = "Ivy", MONEY = 25000 };
+            Customer customer3 = new Customer() { ID = 103, NAME = "Puja", MONEY = 15000 };
+
+            Dictionary<int, Customer> dictionaryPeople = new Dictionary<int, Customer>();
+            dictionaryPeople.Add(customer1.ID, customer1);
+            dictionaryPeople.Add(customer2.ID, customer2);
+            dictionaryPeople.Add(customer3.ID, customer3);
+
+            if(! dictionaryPeople.ContainsKey(customer1.ID))    //dictionaryPeople.ContainsKey(customer1.ID) -- RETURNS true or false........
+            dictionaryPeople.Add(customer1.ID, customer1);
+
+        }
+    }
+    class Customer
+    {
+        public int ID { get; set; }
+        public string NAME { get; set; }
+        public int MONEY { get; set; }
+    }
+}
+*****************************************************************************************************
+USING TryGetValue( <id>, <out PARAMETER(that receives the value)>)
+it is used to avoid compilation error
+*****************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { ID = 101, NAME = "Soham", MONEY = 50000 };
+            Customer customer2 = new Customer() { ID = 102, NAME = "Ivy", MONEY = 25000 };
+            Customer customer3 = new Customer() { ID = 103, NAME = "Puja", MONEY = 15000 };
+
+            Dictionary<int, Customer> dictionaryPeople = new Dictionary<int, Customer>();
+            dictionaryPeople.Add(customer1.ID, customer1);
+            dictionaryPeople.Add(customer2.ID, customer2);
+            dictionaryPeople.Add(customer3.ID, customer3);
+
+            Customer cus;
+            if(dictionaryPeople.TryGetValue(110, out cus))
+            {
+                Console.WriteLine("Id = {0} Name = {1} Money = {2}", cus.ID, cus.NAME, cus.MONEY);
+            }
+            else
+            {
+                Console.WriteLine("Idiot");
+            }
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public int ID { get; set; }
+        public string NAME { get; set; }
+        public int MONEY { get; set; }
+    }
+}
+*****************************************************************************************************************
+.Count function is used to find the MEMBERS in a dictionary
+*****************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { ID = 101, NAME = "Soham", MONEY = 50000 };
+            Customer customer2 = new Customer() { ID = 102, NAME = "Ivy", MONEY = 25000 };
+            Customer customer3 = new Customer() { ID = 103, NAME = "Puja", MONEY = 15000 };
+
+            Dictionary<int, Customer> dictionaryPeople = new Dictionary<int, Customer>();
+            dictionaryPeople.Add(customer1.ID, customer1);
+            dictionaryPeople.Add(customer2.ID, customer2);
+            dictionaryPeople.Add(customer3.ID, customer3);
+
+            int cus = dictionaryPeople.Count; //gives the number of the dictionary element //3
+            Console.WriteLine("mem= {0}", cus);
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public int ID { get; set; }
+        public string NAME { get; set; }
+        public int MONEY { get; set; }
+    }
+}
+
+*****************************************************************************************************************
+.Remove method removes an id as given
+*****************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { ID = 101, NAME = "Soham", MONEY = 50000 };
+            Customer customer2 = new Customer() { ID = 102, NAME = "Ivy", MONEY = 25000 };
+            Customer customer3 = new Customer() { ID = 103, NAME = "Puja", MONEY = 15000 };
+
+            Dictionary<int, Customer> dictionaryPeople = new Dictionary<int, Customer>();
+            dictionaryPeople.Add(customer1.ID, customer1);
+            dictionaryPeople.Add(customer2.ID, customer2);
+            dictionaryPeople.Add(customer3.ID, customer3);
+
+            dictionaryPeople.Remove(103);
+
+            foreach(var IVY in dictionaryPeople)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Money = {2}", IVY.Value.NAME, IVY.Value.ID, IVY.Value.MONEY);
+                Console.WriteLine();
+            }
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public int ID { get; set; }
+        public string NAME { get; set; }
+        public int MONEY { get; set; }
+    }
+}
+
+-----------------------------------------------------
+Name = Soham, Id = 101, Money = 50000
+
+Name = Ivy, Id = 102, Money = 25000
+-----------------------------------------------------
+
+*****************************************************************************************************************
+.Clear is used, when we want to remove all the items from DICTIONARY.
+*****************************************************************************************************************
+
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { ID = 101, NAME = "Soham", MONEY = 50000 };
+            Customer customer2 = new Customer() { ID = 102, NAME = "Ivy", MONEY = 25000 };
+            Customer customer3 = new Customer() { ID = 103, NAME = "Puja", MONEY = 15000 };
+
+            Dictionary<int, Customer> dictionaryPeople = new Dictionary<int, Customer>();
+            dictionaryPeople.Add(customer1.ID, customer1);
+            dictionaryPeople.Add(customer2.ID, customer2);
+            dictionaryPeople.Add(customer3.ID, customer3);
+
+            dictionaryPeople.Clear();
+
+            foreach(var IVY in dictionaryPeople)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Money = {2}", IVY.Value.NAME, IVY.Value.ID, IVY.Value.MONEY);
+                Console.WriteLine();
+            }
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public int ID { get; set; }
+        public string NAME { get; set; }
+        public int MONEY { get; set; }
+    }
+}
+-----------------------------------------------------
+NO OUTPUT
+-----------------------------------------------------
+*****************************************************************************************************************
+convert an array into dictionary
+*****************************************************************************************************************
+try later
+video 73
+***********************************************************************************************************************
+FINDING ELEMET IN A LIST USING LINQ
+****************************************************************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Collections;
+
+namespace ConsoleApp5
+{
+    class phonebook
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string phone { get; set; }
+        public string age { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            phonebook pb1 = new phonebook() { id = 1, name = "Soham", phone = "7412458965", age = "20" };
+            phonebook pb2 = new phonebook() { id = 2, name = "ivy", phone = "7454123658", age = "19" };
+            phonebook pb3 = new phonebook() { id = 3, name = "Dishani", phone = "412589654", age = "20" };
+
+            Dictionary<int, phonebook> dick = new Dictionary<int, phonebook>();
+            dick.Add(pb1.id, pb1);
+            dick.Add(pb2.id, pb2);
+            dick.Add(pb3.id, pb3);
+
+
+            var v = dick.Where(d => d.Key == 2).Select(n => n.Value);
+            foreach(var j in v)
+                Console.WriteLine("Name : {0}, Phone : {1}, age : {2}",j.name, j.phone, j.age);
+
+            Console.ReadKey();
+        }
+    }
+}
+ 	

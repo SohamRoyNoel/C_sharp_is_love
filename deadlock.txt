@@ -1,0 +1,76 @@
+using System;
+using System.Threading;
+using System.Diagnostics;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            amount am1 = new amount(5000, 101);
+            amount am2 = new amount(6000, 102);
+
+            manager man1 = new manager(am1, am2, 2000);
+            manager man2 = new manager(am2, am1, 1000);
+
+            Thread t1 = new Thread(man1.tranfer);
+            Thread t2 = new Thread(man2.tranfer);
+
+            t1.Start();
+            t2.Start();
+
+            t1.Join();
+            t2.Join();
+
+            Console.ReadKey();
+        }
+    }
+    public class amount
+    {
+        int balance;
+        int id;
+        public amount(int bal, int i)
+        {
+            balance = bal;
+            id = i;
+        }
+
+        public void withdraw(int x)
+        {
+            balance = balance - x;
+        }
+
+        public void deposite(int x)
+        {
+            balance = balance + x;
+        }
+    }
+     public class manager
+    {
+        amount toaccount;
+        amount fromaccount;
+        int money;
+
+        public manager(amount x, amount y, int z)
+        {
+            toaccount = x;
+            fromaccount = y;
+            money = z;
+        }
+
+
+        public void tranfer()
+        {
+            lock (fromaccount)
+            {
+                Thread.Sleep(2000);
+                lock(toaccount)
+                {
+                    fromaccount.withdraw(money);
+                    toaccount.deposite(money);
+                }
+            }    
+        }
+    }
+}

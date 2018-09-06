@@ -1,0 +1,168 @@
+**********************************************************************
+EQUALS function
+**********************************************************************
+using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            int i = 10; //11
+            int j = 10;
+            Console.WriteLine(i == j);       //True          //false
+            Console.WriteLine(i.Equals(j));  //True       //false
+            Console.ReadKey();
+        }
+    }
+}
+**********************************************************************
+enum in EQUAL FUNCTION (SINCE ENUM IS VALUE TYPE THAT IS WHY IT ATTENDS THE COMPARISONS)
+**********************************************************************
+using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            season ss = season.winter; //UNDERLYING VALUE 1
+            season sb = season.summer;   //UNDERLYING VALUE 2 :. no equal
+            Console.WriteLine(ss == sb);        //False
+            Console.WriteLine(ss.Equals(sb));   //False
+
+            Console.ReadKey();
+        }
+    }
+    public enum season
+    {
+        winter =1,
+        summer, 
+        rain,
+        Autom
+    }
+}
+************************************************************************************************
+VALUE EQUALITY never assure the condition WILL BE TRUE OR FALSE......
+BUT
+POINTER EQUALITY will assure the conditions will be true...
+************************************************************************************************
+VALUE EQUALITY
+******************
+using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            bomb bb = new bomb();
+            bb.id = 101;
+            bb.name = "Ivy";
+
+            bomb bb2 = new bomb();
+            bb.id = 101;
+            bb.name = "Soham";
+
+            Console.WriteLine(bb == bb2);         //HAVING SAME VALUE WILL NEVER ASSURE IF THE CASE IS TRUE OR FALSE
+            Console.WriteLine(bb.Equals(bb2));
+
+            Console.ReadKey();
+        }
+    }
+    public class bomb
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+    }
+}
+**********O/P*******************
+False
+False
+*********************************
+POINTER EQUALITY
+***********************************************************
+using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            bomb bb = new bomb();
+            bb.id = 101;
+            bb.name = "Ivy";
+
+            bomb bb2 = bb; //pointer equality will always ensure the EQUALITY.
+
+            Console.WriteLine(bb == bb2);
+            Console.WriteLine(bb.Equals(bb2));
+
+            Console.ReadKey();
+        }
+    }
+    public class bomb
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+    }
+}
+***************************************O/P
+True
+True
+*******************************************
+Why FALSE comes when we USE VALUE REFFERENCE?
+@: For the default implemntation in SYSTEM.OBJECT method. It doesnt kow the conditions to check to PROVE EQUALITY in case of Value Refference.
+*********************************************************************************************************************************
+So, Implementation is needed USING OVERRIDE;
+
+using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            bomb bb = new bomb();
+            bb.id = 101;
+            bb.name = "Ivy";
+
+            bomb bb2 = new bomb();
+            bb2.id = 101;
+            bb2.name = "Ivy";
+
+            Console.WriteLine(bb == bb2);            //using pointer, THAT has no clue, if that is true or false
+            Console.WriteLine(bb.Equals(bb2));     //the overridden method will give TRUE. coz it has some logic
+
+            Console.ReadKey();
+        }
+    }
+    public class bomb
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+
+        public override bool Equals(object obj) //keeping same signature of the Equals method in system.object
+        {
+            if (!(obj is bomb))
+                return false;
+            if (obj == null)
+                return false;
+            return this.id == ((bomb)obj).id && this.name == ((bomb)obj).name;  //obj should be TYPE CASTED in order to get the access of PROPERTIES IN CLASS.
+        }
+    }
+}
+*************************************
+False
+True
+***********************************

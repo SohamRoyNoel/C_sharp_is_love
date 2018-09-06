@@ -1,0 +1,74 @@
+Extension method enables you to add methods to the existing types without creating a new derived type
+reccompiling, or otherwise modifing the original operator.......
+
+EXTENSION methods are a special kind of STATIC method.
+they are clled as INSTANCE METHOD
+***********************************************************************************
+using System;
+using System.Globalization;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+
+namespace ConsoleApp4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string cat = "soham roy";
+            extention ob = new extention();
+            string xn = ob.changebyExtention(cat);
+            Console.WriteLine(xn);
+            Console.ReadKey();
+        }
+    }
+    public class extention
+    {
+        public string changebyExtention(string v)
+        {
+            char[] x = v.ToArray();
+            x[0] = char.IsUpper(x[0]) ? char.ToLower(x[0]) : char.ToUpper(x[0]);
+            return new string(x);
+        }
+    }
+}
+------------Soham roy
+****************************************************************************** 
+using System;
+using System.Globalization;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+
+namespace ConsoleApp4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string cat = "soham roy";
+            //extention ob = new extention();
+            //string xn = ob.changebyExtention(cat);
+            string xn = cat.changebyExtention();//Extention method -- Actually extending the string class, with a new method
+            Console.WriteLine(xn);
+            Console.ReadKey();
+        }
+    }
+    public static class extention //add STATIC
+    {
+        public static string changebyExtention(this string v) //add -- static -- this
+        {
+            char[] x = v.ToArray();
+            x[0] = char.IsUpper(x[0]) ? char.ToLower(x[0]) : char.ToUpper(x[0]);
+            return new string(x);
+        }
+    }
+}
+ 

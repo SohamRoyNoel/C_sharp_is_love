@@ -1,0 +1,178 @@
+**************************************************************************************
+OPTIONAL PARAMETER
+**************************************************************************************
+1. PARAMETER ARRAY 
+2. METHOD OVERLOADING
+3. SPECIFY PARAMETER DEFAULTS
+4. OPTIONAL ATTRIBUTE (System.InteropServices namespace)
+******************************************************************************************************************
+1. PARAMETER ARRAY
+******************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            //add(10, 20);          //o/p: 30
+            //add(10, 20, 30, 40);  //o/p:100
+            add(10, 20, new int[] { 30, 40, 50 }); //o/p: 150
+        }
+
+        public static void add(int fn, int sn, params int[] rem)    //Params should come at last, ELSE IT WILL SHOW ERROR
+        {
+            int res = fn + sn;
+            if(rem != null)
+            {
+                foreach(int i in rem)
+                {
+                    res += i;
+                }
+            }
+            Console.WriteLine("result = {0}", res);
+            Console.ReadKey();
+        }
+    }
+}
+************************************************************************************************************************************************************************************************************************************
+2. METHOD OVERLOADING
+************************************************************************************************************************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            add(10, 20);               //30 (by method 1 -add)
+            add(10, 20, new int[] { 30, 40, 50 });   //150 (by method 2 -add)
+        }
+
+        public static void add(int fn, int sn)    //Creating the method that takes TWO PARAMETERS, and PASSES IT THROUGH an overloaded virsions of ADD, and prints it as well.
+        {
+            add(fn, sn, null);
+        }
+
+        public static void add(int fn, int sn, int[] rem)   //IF YOU DONT PUT params KEY WORD THEN YOU GOTTA PUT A 3RD VALUE, or the method will be fucked. 
+        {
+            int res = fn + sn;
+            if (rem != null)
+            {
+                foreach (int i in rem)
+                {
+                    res += i;
+                }
+            }
+            Console.WriteLine("result = {0}", res);
+            Console.ReadKey();
+        }
+    }
+}
+************************************************************************************************************************************************************************************************************************************
+3. SPECIFY PARAMETER DEFAULTS
+************************************************************************************************************************************************************************************************************************************
+CASE :1
+----------->>>>>
+using System;
+using System.Text;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            add(10, 20); //a: 10, b: 20, c: 10(DEFAULT) -----------------> 40
+        }
+
+        public static void add(int fn, int sn, int tn=10)
+        {
+            Console.WriteLine(fn + sn + tn);
+            Console.ReadKey();
+        }
+    }
+}
+
+CASE :2
+----------->>>>>
+using System;
+using System.Text;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            add(10);
+            Console.WriteLine();
+            add(10, 11);
+            Console.WriteLine();
+            add(10, 11, 25);
+        }
+
+        public static void add(int fn, int sn = 20 , int tn=30)
+        {
+            Console.WriteLine("A= {0}", fn);
+            Console.WriteLine("B= {0}", sn);
+            Console.WriteLine("C= {0}", tn);
+            Console.ReadKey();
+        }
+    }
+}
+**********OUTPUTS*****************
+A= 10
+B= 20
+C= 30
+
+A= 10
+B= 11
+C= 30
+
+A= 10
+B= 11
+C= 25
+********************************************
+
+************************************************************************************************************************************************************************************************************************************
+4. OPTIONAL ATTRIBUTE (System.InteropServices namespace)
+************************************************************************************************************************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;  //THIS NAMESPACE IS MANDATORY
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            add(10, 20);  //30
+            add(10, 20, new int[] { 30, 40, 50 }); //150
+        }
+
+        public static void add(int fn, int sn, [Optional] int[] rem)     //PUT AN OPTIONAL ATTRIBUTE
+        {
+            int res = fn + sn;
+            if (rem != null)
+            {
+                foreach (int i in rem)
+                {
+                    res += i;
+                }
+            }
+            Console.WriteLine("result = {0}", res);
+            Console.ReadKey();
+        }
+    }
+}

@@ -1,0 +1,136 @@
+when to use STATIC?
+-------------------A value or method that is not changing every time
+(in case of value of pie)
+if we make PIE as instance field, and use it 1000 times it eill take a lot memory,
+but if PIE is STATIC FIELD, that means only the radius is incrementing, 
+--PIE will be shared, NO COPY IS NEEDED
+
+THIS keyword is not used in case of STATIC Field?
+becase THIS indicates an INSTANCE FIELD, not a static field..............
+
+STATIC method will have ONLY ONE COPY of variable  in memory,
+where as an instance class may has multiple no of copies
+
+STATIC CONSTRUCTORS will never have an ACCESS MODIFIERS.
+But INSTANCE CONSTRUCTOR will always have an ACCESS MODIFIERS.
+
+STATIC CONSTRUCTORS are called before INSTACE CONSTRUCTORS.
+
+STATIC CONSTRUCTORS are called only ONCE
+--------------------------------------------------------------------------------------------------------------------
+USUAL EXAMPLE
+--------------------------------------------------------------------------------------------------------------------
+using System;
+
+namespace ConsoleApp3
+{
+    class circle
+    {
+        public float pie = 3.14F;
+        public float radius;
+
+        public circle(float rad)
+        {
+            radius = rad;
+        }
+
+        public void area()
+        {
+            Console.WriteLine("the are is {0}", pie * radius * radius);
+            Console.ReadKey();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           circle ob=new circle(5);
+            ob.area();
+        }
+    }
+}
+--------------------------------------------------------------------------------------------------------------------
+STATIC METHOD EXAMPLE
+--------------------------------------------------------------------------------------------------------------------
+using System;
+
+namespace ConsoleApp3
+{
+    class circle
+    {
+        static float pie;
+        public float radius;
+
+        static circle()
+        {
+            circle.pie = 3.14f;
+        }
+        public circle(float rad)
+        {
+            radius = rad;
+        }
+
+        public void area()
+        {
+            Console.WriteLine("the are is {0}", pie * radius * radius);
+            Console.ReadKey();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           circle ob=new circle(5);
+            ob.area();
+        }
+    }
+}
+--------------------------------------------------------------------------------------------------------------------
+STATIC is called before any method is called
+--------------------------------------------------------------------------------------------------------------------
+using System;
+
+namespace ConsoleApp3
+{
+    class circle
+    {
+        static float pie;
+        public float radius;
+
+        static circle()
+        {
+            Console.WriteLine("executing static");
+            circle.pie = 3.14f;
+        }
+        public circle(float rad)
+        {
+            radius = rad;
+        }
+
+        public void area()
+        {
+            Console.WriteLine("executing instance");
+            Console.WriteLine("the are is {0}", pie * radius * radius);
+            Console.ReadKey();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           circle ob=new circle(5);
+            ob.area();
+
+            circle ob2 = new circle(6);
+            ob2.area();
+        }
+    }
+}
+--------------------------------------------------------------------------------------------------------------------
+output
+--------------------------------------------------------------------------------------------------------------------
+executing static  //executed once
+executing instance  //executes no of times
+the are is 78.5
+executing instance
+the are is 113.04

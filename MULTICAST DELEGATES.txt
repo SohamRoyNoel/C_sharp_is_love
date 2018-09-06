@@ -1,0 +1,169 @@
+*************************************************************************************
+MULTICASTING DELEGATES (a delegate pointing to MULTIPLE METHODS)
+*************************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    public delegate void useofdelegate();
+    class Program 
+    {
+        static void Main(string[] args)
+        {
+            useofdelegate del1, del2, del3, del4;    //SPLITING INTO 3 delecates
+ 
+            del1 = new useofdelegate(fun1);        //pointing to the method
+            del2 = new useofdelegate(fun2);
+            del3 = new useofdelegate(fun3);
+
+            del4 = del1 + del2 + del3;                    //invokes all at a time
+            del4();                                                   //delegates are REFERED to particular function, that is why call should always be direct.
+            Console.ReadKey();
+        }
+
+        public static void fun1()
+        {
+            Console.WriteLine("from function1");
+        }
+
+        public static void fun2()
+        {
+            Console.WriteLine("from function2");
+        }
+
+        public static void fun3()
+        {
+            Console.WriteLine("from function3");
+        }
+    }
+}
+***********************************************
+from function1
+from function2
+from function3
+***********************************************
+
+**********************************************************************************************
+ANOTHER WAY TO DO SO
+**********************************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    public delegate void useofdelegate();
+    class Program 
+    {
+        static void Main(string[] args)
+        {
+           useofdelegate obUseofdelegate=new useofdelegate(fun1);   
+            obUseofdelegate += fun2;        //adds in DELEGATE INVOCATION LIST.
+            obUseofdelegate += fun3;
+            obUseofdelegate += fun3;          //DELETING DELEGATE
+            obUseofdelegate();
+            Console.ReadKey();
+        }
+
+        public static void fun1()
+        {
+            Console.WriteLine("from function1");
+        }
+
+        public static void fun2()
+        {
+            Console.WriteLine("from function2");
+        }
+
+        public static void fun3()
+        {
+            Console.WriteLine("from function3");
+        }
+    }
+}
+**********************************************************************************************
+When we have  a delegate having INT datatype, and 3 METHODS like bellow. 
+WHICH ONE WOULD BE PRINTED?
+@:   <the last method which is registered>
+**********************************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    public delegate int useofdelegate();
+    class Program 
+    {
+        static void Main(string[] args)
+        {
+           useofdelegate obUseofdelegate=new useofdelegate(fun1);
+            obUseofdelegate += fun2;
+            obUseofdelegate += fun3;
+            int getval= obUseofdelegate();
+
+            Console.WriteLine(getval);   //3
+
+            Console.ReadKey();
+        }
+
+        public static int fun1()
+        {
+            return 1;
+        }
+
+        public static int fun2()
+        {
+            return 2;
+        }
+
+        public static int fun3()
+        {
+            return 3;
+        }
+    }
+}
+***********************************************
+when we have OUT PARAMETER case
+***********************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    public delegate void useofdelegate(out int h);
+    class Program 
+    {
+        static void Main(string[] args)
+        {
+           useofdelegate obUseofdelegate=new useofdelegate(fun1);
+            obUseofdelegate += fun2;
+            obUseofdelegate += fun3;
+
+            int receiver = -1;
+            obUseofdelegate(out receiver);
+
+            Console.WriteLine(receiver);   //3
+
+            Console.ReadKey();
+        }
+
+        public static void fun1(out int num)
+        {
+            num = 1;
+        }
+
+        public static void fun2(out int num)
+        {
+            num = 2;
+        }
+
+        public static void fun3(out int num)
+        {
+            num = 3;
+        }
+    }
+}

@@ -1,0 +1,599 @@
+**************************************************************************************************
+SINGLE THREADING
+**************************************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp3
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            button1.Visible = false;   //DISACLES THE BUTTONS FOR 6 SECONDS...................... It is an example of deafault threading........../.......................Main threading
+            button2.Visible = false;
+
+            MyFirstThread();
+
+            button1.Visible = true;
+            button2.Visible = true;
+        }
+
+        public static void MyFirstThread()
+        {
+            Thread.Sleep(6000); //6000 mil sec = 6 sec
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i <= 10; i++)
+            {
+                listBox1.Items.Add(i);
+            }
+            Console.WriteLine();
+        }
+    }
+}
+
+******************************************************************************************************
+Multiple thread
+*****************************************************************************************************
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp3
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            button1.Visible = false;
+            button2.Visible = false;
+
+            Thread tt = new Thread(MyFirstThread);
+            tt.Start();
+            //MyFirstThread();
+
+            button1.Visible = true;
+            button2.Visible = true;
+        }
+
+        public static void MyFirstThread()
+        {
+            Thread.Sleep(6000); //6000 mil sec = 6 sec
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i <= 10; i++)
+            {
+                listBox1.Items.Add(i);
+            }
+            Console.WriteLine();
+        }
+    }
+}
+
+********************************************************************************************************************
+THREAD START DELEGATE : Any thread you create explicitely defined in a POINTER to A FUNCTION TO GIVE   a start point of the tread : YOU DONT HAVE A NEED TO PASS DATA
+**********************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            cat oo = new cat();
+            //Thread tt = new Thread(() => oo.nos());
+            Thread tt = new Thread(delegate () { oo.nos(); });
+            tt.Start();
+            Console.ReadKey();
+        }
+    }
+    class cat
+    {
+        public void nos()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine(i);
+            }
+        }
+    }
+}
+
+********************************************************************************************************************
+PARAMETERISED THREAD START DELEGATE :  { YOU HAVE A NEED TO PASS DATA}
+**********************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Type a number");
+
+            object ob = Console.ReadLine(); //6. we need to pass the value to "nos" function, having OBJECT datatype
+
+            cat oo = new cat();
+
+            ParameterizedThreadStart parameterizedThreadStartOb = new ParameterizedThreadStart(cat.nos); //1. is a delegate  //takes the FUNCTION HAVING SAME signature;   //3. ParameterisedThreadStart has a Signature @ [public delegate void ParameterizedThreadStart(object obj);]
+
+            Thread tt = new Thread(parameterizedThreadStartOb); //2. pass the ParameterizedThreadStart instance into the thread class
+
+            tt.Start(ob); //7. this "ob" instance will pass through the function "nos" at "cat" class VIA THE DELEGATE "ParameterizedThreadStart"
+
+            Console.ReadKey();
+        }
+    }
+    class cat
+    {
+        public static void nos(object num) //4. we need to put a same signature ( object instade of int)
+        {
+            //5. now type cast the Objet variable into int; .TryPharse
+            int m = 0;
+
+            if (int.TryParse(num.ToString(), out m))  //8. type cast it: try pharse(<string>, out <var>)
+            {
+                for (int i = 0; i < m; i++)
+                {
+                    Console.WriteLine(i);
+                }
+            }
+        }
+    }
+}
+**********************************************************************************************************************************************
+Another process TO USE AN OVERLOADED VERSIONS OF THREAD CLASS. (same as previous)
+**********************************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Type a number");
+
+            object ob = Console.ReadLine();   //WE ARE HOLDING AN INTEGER VALUE IN AN object, THIS IS THE REASON WHERE """"type safe property of c# is being violated""""";;;
+
+            cat oo = new cat();
+
+            //we are not intended to INITIALIZE A thread class using an INSTANCE.
+           //ParameterizedThreadStart parameterizedThreadStartOb = new ParameterizedThreadStart(cat.nos); //target
+
+            Thread tt = new Thread(cat.nos); //1 pass the TARGET function.... (its just an overloaded version.. of thread class)
+
+            tt.Start(ob); 
+
+            Console.ReadKey();
+        }
+    }
+    class cat
+    {
+        public static void nos(object num) 
+        {
+            //now type cast the Objet variable into int;
+            int m = 0;
+
+            if (int.TryParse(num.ToString(), out m))  
+            {
+                for (int i = 0; i < m; i++)
+                {
+                    Console.WriteLine(i);
+                }
+            }
+        }
+    }
+}
+**********************************************************************************************************************************************
+KEEPING THE type safe property of C# constant RATHER USING ParameterisedThreadStart method
+**********************************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Enter the value");
+            int ob = Convert.ToInt32(Console.ReadLine());   //HOLDING THE VALUE IN int;
+            butter but = new butter(ob); //passing it through HELPER class
+
+            Thread t = new Thread(but.Getter);  //passing the TARGET function into thread class
+            t.Start();
+        }
+    }
+    class butter
+    {
+        int no;
+        public butter(int x)
+        {
+            no = x;
+        }
+        public void Getter()
+        {
+            for (int i = 0; i <= no; i++)
+            {
+                Console.WriteLine(i);
+            }
+        }
+    }
+}
+******************************************************************************************************************************************************
+RETRIVING DATA FROM DELEGATE : 
+******************************************************************************************************************************************************
+using System;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    public delegate void step1(int value); //1. create a delegate
+
+    class Program
+    {
+        public static void printval(int sum1) //4. delagate will point this RETRIVING FUNCTION. so it should have same signature with DELEGATE.
+        {                                         //this will HAND the value from Getter funvtion in BUTTER class.
+            Console.WriteLine("sum is {0}", sum1);
+        }
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("enter a value");
+            int a = Convert.ToInt32(Console.ReadLine());
+
+            step1 del = new step1(printval); //5. Printval is TARGET
+
+            butter bt = new butter(a, del); //6. askes two parameter: 1. (int x) = value entered by user ||| 2. (step1 p) = a parameter has a REFFERENCE TO [TARGET / PRINTVAL ]
+
+            Thread t = new Thread(new ThreadStart(bt.Getter)); //7. creating a thread instance. and passing THE TARGET
+            t.Start();
+
+            Console.ReadKey();
+        }
+    }
+    //2. create a PARAMETER having datatype of step1 delegate
+    class butter
+    {
+        int no;
+        step1 par; // 2/A. same datatype as delegate
+        public butter(int x, step1 p)   //2/B. constructor
+        {
+            no = x;
+            par = p;
+        }
+        public void Getter() 
+        {
+            int sum = 0;
+            for (int i = 0; i <= no; i++)
+            {
+                sum =sum+ i;
+            }
+            if (par != null)  //3. The "par" is indicating to THE DELAGATE
+                par(sum);  //3/A. sum WILL BE HANDED OVER TO THE FUNCTION which is pointed by delegate.
+        }
+    }
+}
+**********************************************************************************************************************************************
+JOINING OF THREADs
+**********************************************************************************************************************************************
+using System;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Main started");
+
+            Thread t1 = new Thread(thread1);
+            t1.Start();
+
+            Thread t2 = new Thread(thread2);
+            t2.Start();
+
+            Thread t3 = new Thread(thread3);
+            t3.Start();
+            Console.WriteLine("Main completed");
+        }
+
+        public static void thread1()
+        {
+            Console.WriteLine("thread1 has completed");
+        }
+
+        public static void thread2()
+        {
+            Console.WriteLine("thread2 has completed");
+        }
+
+        public static void thread3()
+        {
+            Console.WriteLine("thread3 has completed");
+        }
+    }
+}
+------------------------------------------------------------------------------ 1st run
+Main started
+thread1 has completed
+Main completed
+thread2 has completed
+thread3 has completed
+------------------------------------------------------------------------------ 2nd run
+Main started
+thread1 has completed
+thread2 has completed
+thread3 has completed
+Main completed
+------------------------------------------------------------------------------
+******************************************************WHEN YOU WANT main (completed / started) WILL EXECUTE @ end & @ beginning.....
+using System;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Main started");
+
+            Thread t1 = new Thread(thread1);
+            t1.Start();
+            t1.Join(); //suspends the execution time for MAIN thread
+
+            Thread t2 = new Thread(thread2);
+            t2.Start();
+            t2.Join();
+
+            Thread t3 = new Thread(thread3);
+            t3.Start();
+            t3.Join();
+
+            Console.WriteLine("Main completed");
+
+            Console.ReadKey();
+        }
+
+        public static void thread1()
+        {
+            Console.WriteLine("thread1 has completed");
+        }
+
+        public static void thread2()
+        {
+            Console.WriteLine("thread2 has completed");
+        }
+--------------------------------------------------------
+Main started
+thread1 has completed
+thread2 has completed
+thread3 has completed
+Main completed
+---------------------------------------------------------
+******************************************************IF WE PUT A Thread.Sleep() at any thread;
+using System;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Main started");
+
+            Thread t1 = new Thread(thread1);
+            t1.Start();
+            t1.Join();
+
+            Thread t2 = new Thread(thread2);
+            t2.Start();
+            t2.Join();
+
+            Thread t3 = new Thread(thread3);
+            t3.Start();
+            t3.Join();
+
+            Console.WriteLine("Main completed");
+
+            Console.ReadKey();
+        }
+
+        public static void thread1()
+        {
+            Console.WriteLine("thread1 has COME");
+            
+        }
+
+        public static void thread2()
+        {
+            Console.WriteLine("thread2 has Come");
+            Thread.Sleep(5000);
+            Console.WriteLine("thread2 has completed");
+        }
+
+        public static void thread3()
+        {
+            Console.WriteLine("thread3 has completed");
+        }
+    }
+}
+--------------------------------------------------------
+Main started
+thread1 has COME
+thread2 has Come //stops execution for 5 sec
+thread2 has completed
+thread3 has completed
+Main completed
+---------------------------------------------------------
+****************************************************** USING 2nd OVERLOADED VERSIONS OF [.Join(<int mili sec>)]
+using System;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Main started");
+
+            Thread t1 = new Thread(thread1);
+            t1.Start();
+            t1.Join();
+
+            Thread t2 = new Thread(thread2);
+            t2.Start();
+            t2.Join(1000); //this will wait for 1sec just to get thread2, If comes then OK, or it will start executing next : returns bool
+
+            Thread t3 = new Thread(thread3);
+            t3.Start();
+            t3.Join();
+
+            Console.WriteLine("Main completed");
+
+            Console.ReadKey();
+        }
+
+        public static void thread1()
+        {
+            Console.WriteLine("thread1 has Completed");
+        }
+
+        public static void thread2()
+        {
+            Console.WriteLine("thread2 has Come");
+            Thread.Sleep(5000);
+            Console.WriteLine("thread2 has Completed");
+        }
+
+        public static void thread3()
+        {
+            Console.WriteLine("thread3 has completed");
+        }
+    }
+}
+--------------------------------------------------------
+Main started   //1st
+thread1 has Completed //2nd
+thread2 has Come  //3rd : then got a 5 sec of sleep time -----------> got .Join(1000); < 5sec [starts executing next thread]
+thread3 has completed //4th
+Main completed //5th
+thread2 has Completed //6th : after a certain time
+-----------------------------------------------------------
+*************************************************************************AFTER CALLING AND EXECUTING THREAD-2 & THREAD-3; checking IF the THREAD-1 is still alive or not ?
+[.isAlive()] : returns bool;
+-------------------------------
+using System;
+using System.Threading;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Main started");
+
+            Thread t1 = new Thread(thread1);
+            t1.Start();
+            t1.Join();
+
+            Thread t2 = new Thread(thread2);
+            t2.Start();
+            t2.Join(1000);
+
+            Thread t3 = new Thread(thread3);
+            t3.Start();
+            t3.Join();
+
+            if(t1.IsAlive)
+            {
+                Console.WriteLine("thread1 has still working");
+            }
+            else
+            {
+                Console.WriteLine("thread1 has done");
+            }
+
+            Console.WriteLine("Main completed");
+
+            Console.ReadKey();
+        }
+
+        public static void thread1()
+        {
+            Console.WriteLine("thread1 has Completed");
+        }
+
+        public static void thread2()
+        {
+            Console.WriteLine("thread2 has Come");
+            Thread.Sleep(5000);
+            Console.WriteLine("thread2 has Completed");
+        }
+
+        public static void thread3()
+        {
+            Console.WriteLine("thread3 has completed");
+        }
+    }
+}
+-----------------------------------------------------------------------------
+Main started
+thread1 has Completed
+thread2 has Come
+thread3 has completed
+thread1 has done //thread- 1 is dead
+Main completed
+thread2 has Completed
+------------------------------------------------------------------------------
+*************************************************************************

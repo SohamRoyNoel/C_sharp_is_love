@@ -1,0 +1,51 @@
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    public struct first
+    {
+        private string firstname;
+        private string lastname;
+
+        public string Fn
+        {
+            set { this.firstname = value; }
+        }
+
+        public string Ln
+        {
+            set { this.firstname = value; }
+        }
+
+        public first(string fnm, string lnm)
+        {
+            this.firstname = fnm;
+            this.lastname = lnm;
+        }
+
+        public void concat()
+        {
+            Console.WriteLine("full name is: {0}", firstname+ " "+ lastname);
+            Console.ReadKey();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            first st = new first("soham", "roy");
+            //st.Fn = "Soham";
+            //st.Ln = "Roy";
+            st.concat();
+        }
+    }
+}
+*************************************************************************************
+DIFFERENCE BETWEEN STRUCTS AND CLASSES
+*************************************************************************************
+VID 29
+*************************************************************************************
+INHERITANCE CAN BE PREVENTED BY sealed KEYWORD.
+*************************************************************************************

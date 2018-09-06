@@ -1,0 +1,59 @@
+**********************************************************************
+DIAMOND PROBLEM
+**********************************************************************
+		class A
+	          /		\	
+	class B		class C
+	          \                        /
+		class D
+
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    class A         //SUPER BASE CLASS
+    {
+        public virtual void print()
+        {
+            Console.WriteLine("From A");
+        }
+    }
+
+    class B : A    //B IS INHERITTING FROM A
+    {
+        public override void print()
+        {
+            Console.WriteLine("From B");
+        }
+    }
+
+    class C : A       //C IS INHERITTING FROM A
+    {
+        public override void print()
+        {
+            Console.WriteLine("From C");
+        }
+    }
+
+    class D: B, C        //D IS INHERITTING FROM B, C
+    {
+        public override void print()
+        {
+            Console.WriteLine("From D");
+        }
+    }
+    class Program 
+    {
+        static void Main(string[] args)
+        {
+            
+        }
+    }
+}
+*********************************************************
+When D is inheritting from B, C then, it's an ambuiguity for D to think from where 
+it should inherit;
+THE PROBLEM IS LIKE THE SHAPE ABOVE;
+THAT IS WHY IT IS CALLED DIAMOND PROBLEM.

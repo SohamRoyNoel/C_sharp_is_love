@@ -1,0 +1,156 @@
+ using System;
+
+namespace ConsoleApp3
+{
+    class employee
+    {
+        public string Fnm;
+        public string Lnm;
+        public string Em;
+
+        public void printnm()
+        {
+            Console.WriteLine(Fnm+" "+Lnm);
+            Console.ReadKey();
+        }
+    }
+
+    class parttime : employee
+    {
+        public string salperYEAR;
+    }
+
+    class fulltime : employee
+    {
+        public string salperMonth;
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           parttime pt=new parttime();
+            pt.Fnm = "Soham";
+            pt.Lnm = "Roy";
+            pt.Em = "abc@g.com";
+            pt.salperYEAR = "500";
+            pt.printnm();
+
+            fulltime ft=new fulltime();
+            ft.Fnm = "Rick";
+            ft.Lnm = "Morison";
+            ft.Em = "Mia";
+            ft.salperMonth = "800";
+            ft.printnm();
+        }
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------------------------
+WHEN WE HAVE A OVERLOADED VERTION ON CONSTRUCTORS IN PARENT
+-------------------------------------------------------------------------------------------------------------------------------------------
+using System;
+
+namespace ConsoleApp3
+{
+    class employee
+    {
+        public string Fnm;
+        public string Lnm;
+        public string Em;
+
+        public void printnm()
+        {
+            Console.WriteLine(Fnm+" "+Lnm);
+            Console.ReadKey();
+        }
+
+        public void printnm(string m)
+        {
+            Console.WriteLine(m);
+            Console.ReadKey();
+        }
+    }
+
+    class parttime : employee
+    {
+        public string salperYEAR;
+    }
+
+    class fulltime : employee
+    {
+        public string salperMonth;
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           parttime pt=new parttime();
+            pt.Fnm = "Soham";
+            pt.Lnm = "Roy";
+            pt.Em = "abc@g.com";
+            pt.salperYEAR = "500";
+            pt.printnm();
+            pt.printnm("from child");
+
+            fulltime ft=new fulltime();
+            ft.Fnm = "Rick";
+            ft.Lnm = "Morison";
+            ft.Em = "Mia";
+            ft.salperMonth = "800";
+            ft.printnm();
+            pt.printnm("from child2");
+        }
+    }
+}
+************************************************************************************************
+output:
+************************************************************************************************
+Soham Roy
+from child
+Rick Morison
+from child2
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+WHEN WE HAVE A OVERLOADED VERTION ON CONSTRUCTORS IN PARENT : operated from base
+-------------------------------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Net.Http;
+
+namespace ConsoleApp3
+{
+    public class parent
+    {
+        public parent()
+        {
+            Console.WriteLine("from parent");
+        }
+
+        public parent(string m)
+        {
+            Console.WriteLine(m);
+        }
+    }
+
+    public class child : parent
+    {
+        public child() : base("controled from here") //base refers to PARENT CLASS
+        {
+            Console.WriteLine("from child");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           child cd=new child();
+            Console.ReadKey();
+        }
+    }
+}
+************************************************************************************************
+output:
+*******************************************************************************
+controled from here
+from child
+
+
+

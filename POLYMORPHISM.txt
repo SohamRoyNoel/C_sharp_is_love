@@ -1,0 +1,208 @@
+polymorphism enables to attempt DERIVED CLASS method using PARENT CLASS AT RUNTIME
+<PARENT CLASS> ob= new <child class>
+----------------------------------------------------------------------------------------------------------------------------------------------------
+without polymorphism
+----------------------------------------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Net.Http;
+
+namespace ConsoleApp3
+{
+    class employee
+    {
+        public string firstname = "Robin";
+        public string lastname = "Hood";
+
+        public void concat() //hides all other METHODS NAMED SAME
+        {
+            Console.WriteLine(firstname+ " "+lastname);
+            Console.ReadKey();
+        }
+    }
+
+    class fulltime : employee
+    {
+        public void concat()
+        {
+            Console.WriteLine(firstname + " " + lastname);
+        }
+    }
+
+    class parttime : employee
+    {
+        public void concat()
+        {
+            Console.WriteLine(firstname + " " + lastname);
+          
+        }
+    }
+
+    class temporary : employee
+    {
+        public void concat()
+        {
+            Console.WriteLine(firstname + " " + lastname);
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           employee[] emp=new employee[4];
+
+           emp[0]=new employee();
+           emp[1]=new fulltime();
+           emp[2]=new parttime();
+           emp[3]=new temporary();
+           
+           foreach (employee e in emp)
+           {
+               e.concat();
+           }
+        }
+    }
+}
+**********************************************
+Robin Hood
+Robin Hood
+Robin Hood
+Robin Hood
+***********************************************
+----------------------------------------------------------------------------------------------------------------------------------------------------
+with polymorphism : method is invoked by PARENT to CHILD ( VIRTUAL - OVERRIDE)
+----------------------------------------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Net.Http;
+
+namespace ConsoleApp3
+{
+    class employee
+    {
+        public string firstname = "Robin";
+        public string lastname = "Hood";
+
+        public virtual void concat()
+        {
+            Console.WriteLine(firstname+ " "+lastname);
+            Console.ReadKey();
+        }
+    }
+
+    class fulltime : employee
+    {
+        public override void concat()
+        {
+            Console.WriteLine(firstname + " " + lastname + " - fulltime");
+            Console.ReadKey();
+        }
+    }
+
+    class parttime : employee
+    {
+        public override void concat()
+        {
+            Console.WriteLine(firstname + " " + lastname + " - parttime");
+            Console.ReadKey();
+        }
+    }
+
+    class temporary : employee
+    {
+        public override void concat()
+        {
+            Console.WriteLine(firstname + " " + lastname + " - temporary");
+            Console.ReadKey();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           employee[] emp=new employee[4];
+
+           emp[0]=new employee();
+           emp[1]=new fulltime();
+           emp[2]=new parttime();
+           emp[3]=new temporary();
+           
+           foreach (employee e in emp)
+           {
+               e.concat();
+           }
+        }
+    }
+}
+**********************************************
+Robin Hood
+Robin Hood - fulltime
+Robin Hood - parttime
+Robin Hood - temporary
+***********************************************
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+WHEN WE DON'T HAVE A OVERRIDDEN METHOD IN A CLASS, inharits from BAse class
+----------------------------------------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Net.Http;
+
+namespace ConsoleApp3
+{
+    class people
+    {
+        public string Fnm = "Robin";
+        public string Lnm = "Hood";
+
+        public virtual void concat() //VIRTUAL METHOD MEANS IT COULD BE OVERRIDDED BY ANY METHOD
+        {
+            Console.WriteLine(Fnm+ " " + Lnm);
+            Console.ReadKey();
+        }
+    }
+
+    class men : people
+    {
+        public override void concat()
+        {
+            Console.WriteLine(Fnm + " " + Lnm + " - men");
+            Console.ReadKey();
+        }
+    }
+
+    class woman : people
+    {
+        public override void concat()
+        {
+            Console.WriteLine(Fnm + " " + Lnm + " - women");
+            Console.ReadKey();
+        }
+    }
+
+    class gay : people
+    {
+         //no overridden method : THIS GONNA USE THE virtual METHOD from BASE CLASS
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           people[] pp=new people[4];
+
+            pp[0]=new people();
+            pp[1]=new men();
+            pp[2]=new woman();
+            pp[3]= new gay();
+
+            foreach (people p in pp)
+            {
+                p.concat();
+            }
+            
+        }
+    }
+}
+**********************************************
+Robin Hood
+Robin Hood - fulltime
+Robin Hood - parttime
+Robin Hood 
+***********************************************

@@ -1,0 +1,224 @@
+********************************************************************************
+CASES OF ENUM : VALUE TYPE
+********************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            int[] ob = (int[])Enum.GetValues(typeof(gender)); //RETURNS THE VALUE OF AN ARRAY
+            foreach(int xp in ob)
+            {
+                Console.WriteLine(xp);     //0 1 2
+                Console.ReadKey();
+            }
+
+            string[] ob1 = Enum.GetNames(typeof(gender)); //RETURNS THE ELEMENTS IN A ENUM
+            foreach(string np in ob1)
+            {
+                Console.WriteLine(np);      //MALE, FEMALE, UNKNOWN
+                Console.ReadKey();
+            }
+        }
+    }
+    public enum gender
+    {
+        MALE,
+        FEMALE,
+        UNKNOWN
+    }
+}
+********************************************************************************
+CASTING THE UNDERLINE DATATYPE( using : this operator)
+********************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            short[] ob = (short[])Enum.GetValues(typeof(gender));      //2. TYPECAST THE ARRAY TYPE TOO
+            foreach(short xp in ob)  //3. MAKE THE SAME CHANGE HERE
+            {
+                Console.WriteLine(xp);   //0 1 2
+                Console.ReadKey(); 
+            }
+
+            string[] ob1 = Enum.GetNames(typeof(gender));
+            foreach(string np in ob1)
+            {
+                Console.WriteLine(np);  //MALE, FEMALE, UNKNOWN
+                Console.ReadKey();
+            }
+        }
+    }
+    public enum gender : short   //1. type cast the underline datatype (DEFAULT emun has INTEGER datatype)
+    {
+        MALE,
+        FEMALE,
+        UNKNOWN
+    }
+}
+**********************
+CASE 2:
+**********************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            short[] ob = (short[])Enum.GetValues(typeof(gender));
+            foreach(short xp in ob)
+            {
+                Console.WriteLine(xp);   //1, 2, 3 - these are called UNDERLYING VALUES*********************************
+                Console.ReadKey();
+            }
+
+            string[] ob1 = Enum.GetNames(typeof(gender));
+            foreach(string np in ob1)
+            {
+                Console.WriteLine(np);
+                Console.ReadKey();
+            }
+        }
+    }
+    public enum gender : short
+    {
+        MALE =1,                 //IT IS INITIALIZED WITH '1', NEXT WILL BE AS PER SEQUENCE
+        FEMALE,
+        UNKNOWN
+    }
+}
+**********************
+CASE 3:
+**********************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            short[] ob = (short[])Enum.GetValues(typeof(gender));
+            foreach(short xp in ob)
+            {
+                Console.WriteLine(xp);   //1, 25, 90
+                Console.ReadKey();
+            }
+
+            string[] ob1 = Enum.GetNames(typeof(gender));
+            foreach(string np in ob1)
+            {
+                Console.WriteLine(np);
+                Console.ReadKey();
+            }
+        }
+    }
+    public enum gender : short
+    {
+        MALE =1,                 //IT IS INITIALIZED WITH '1', NEXT WILL BE AS PER SEQUENCE
+        FEMALE =25,
+        UNKNOWN = 90
+    }
+}
+**********************************************************************************************************************************************************
+DIFFERENCE BETWEEN "Enum" & "enum"
+**********************************************************************************************************************************************************
+Enum: is a class having different constructors.
+enum: is a datatype(USED TO CREATE an enum)
+
+**********************************************************************************************************************************************************
+ENUMS ARE CALLED STRONGLY TYPED>>>>>
+**********************************************************************************************************************************************************
+*************************************
+CASE 1:
+*************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            //gender ob = 3; //error              //you cant ever ASSIGN an integer @ Em
+            gender ob =(gender)3;                 //rather its possible, TO TYPECAST IT
+
+            // int num = gender.FEMALE; error   //CANT ASSIGN AN INTEGER TO ENUMS
+            int num = (int)gender.MALE; //TYPECAST IT
+        }
+    }
+    public enum gender 
+    {
+        MALE =1,
+        FEMALE,
+        UNKNOWN
+    }
+}
+*************************************
+CASE 2: (an Enum of a type cant be compared WITH OTHER TYPE OF ENUM. even having tthe same underlying value)
+*************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            //gender gen = animal.man;  //had same UNDERLYING VALUES, but got no use UNTILL IT IS STRONGLY TYPECASTED
+            gender gen = (gender)animal.man;
+        }
+    }
+    public enum gender 
+    {
+        MALE,
+        FEMALE,
+        UNKNOWN
+    }
+    public enum animal
+    {
+        man,
+        goat,
+        rabbit
+    }
+}

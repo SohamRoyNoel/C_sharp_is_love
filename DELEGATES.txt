@@ -1,0 +1,55 @@
+DELIGATES
+A delegates are a type safe function pointer
+*****************************************************************
+implementation of delegates
+*****************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    public delegate void invokingDelegate(string Message); //2. build a DELEGATE having same <RETURN TYPE> & <DATATYPE of the function _variable_>
+
+    class Program 
+    {
+        static void Main(string[] args)
+        {
+            invokingDelegate del=new invokingDelegate(hellodelegate); //3. <hellodelegate> is called TARGET FUNCTION
+            del("I'm from delegate babay");
+        }
+
+        public static void hellodelegate(string msg)  //1. build a FUNCTION
+        {
+            Console.WriteLine(msg);
+        }
+    }
+}
+*****************************************************************
+why TYPE SAFE?
+*****************************************************************
+Because if you change THE DELEGATE's type; it'll never point the function
+::::::::::::::::Example
+
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    public delegate int invokingDelegate(string Message); //"hellodelegate" function has VOID type so it'll never accept INT type
+
+    class Program 
+    {
+        static void Main(string[] args)
+        {
+            invokingDelegate del=new invokingDelegate(hellodelegate);
+            del("I'm from delegate babay");
+        }
+
+        public static void hellodelegate(string msg)
+        {
+            Console.WriteLine(msg);
+        }
+    }
+}

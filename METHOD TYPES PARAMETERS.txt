@@ -1,0 +1,143 @@
+1. VALUE parameter
+2. REFFERENCE parameters
+3. OUT parameters
+4. PARAMETER Arrays
+--------------------------------------------------CALL BY VALUE
+using System;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int c = 10;
+            Program.call_by_val(c);
+            Console.Write(c); //10 as OUTPUT
+            Console.Read();
+        }
+       public static void call_by_val(int take)
+        {
+            take = 105;
+        }
+    }
+}
+----------------------------------------------------------CALL BY REFFERENCE
+using System;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int c = 10;
+            Program.call_by_val(ref c);
+            Console.Write(c); //105
+            Console.Read();
+        }
+       public static void call_by_val(ref int take)
+        {
+            take = 105;
+        }
+    }
+}
+-----------------------------------------------------------------------------------------------------
+A METHOD RETURNS MULTIPLE OUTPUTS: (out)
+using System;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int tot;
+            int mul;
+            int a = 10;
+            int b = 15;
+            call(a, b, out tot, out mul);
+            //Program.call(a, b, out tot, out mul); ** all same
+            Console.ReadLine();
+        }
+        
+       public static void call(int take, int took, out int tot, out int multi)
+        {
+            tot = took + take;
+            multi = took * take;
+            Console.WriteLine("sum= {0} & product={1}", tot, multi);
+        }
+    }
+}
+------------------------------------------------------------------------------------------------
+PARAMETER ARRAY:
+using System;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] arr = { 10, 15, 16, 17 };
+            //call(); **RETURNS O no of eements
+            //call(arr);  **RETURNS 4 no of eements { 10, 15, 16, 17 }
+            call(5, 6, 8, 6, 1, 2); //**RETURNS 6 ELEMENTS (5, 6, 8, 6, 1, 2)
+            Console.ReadKey();
+        }
+        
+       public static void call(params int[]nos)
+       {
+            Console.WriteLine("you've {0} no of elements", nos.Length);
+            foreach(int i in nos)
+            {
+                Console.WriteLine(i);
+            }
+       }
+    }
+}
+*****************IF YOU HAVE MULTIPLE NO OF parameters, then PARAMS comes at the very end.***************************
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+using System;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] arr = { 10, 15, 16, 17 };
+            //call();
+            //call(arr);
+            call(5, 6, 8, 6, 1, 2);   --THIS ARE CALLED ARGUMENT
+            Console.ReadKey();
+        }
+        
+       public static void call(params int[]nos) --THIS IS CALLED METHOD PARAMETER
+       {
+            Console.WriteLine("you've {0} no of elements", nos.Length);
+            foreach(int i in nos)
+            {
+                Console.WriteLine(i);
+            }
+       }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

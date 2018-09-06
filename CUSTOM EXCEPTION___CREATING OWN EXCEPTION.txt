@@ -1,0 +1,52 @@
+*********************************************************************************
+CUSTOM EXCEPTION
+******************************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[ ] args)
+        {
+            try
+            {
+                throw new custom("you're an ass"); //APPLYING 2ND OVERLOADED METHOD 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+            }
+        }
+    }
+				//CUSTOM is so called CUSTOM EXCEPTION CLASS(NOT BUILT IN)
+    class custom : Exception //INHERITING from the exception class just to GET ALL BUILTIN constructors  //BUILDING CONSTRUCTORS
+    {
+        public custom() : base()      //1 st type: WHEN NO STRING WILL BE PASSED
+        {
+            
+        }
+
+        public custom(string message) : base(message)   //2nd type: when a string will be passed
+        {
+            
+        }
+
+        public custom(string message, Exception inner) : base(message, inner)  //3rd type: when STRING & INNERexception both will be passed
+        {
+            
+        }
+
+        public custom(SerializationInfo sfInfo, StreamingContext streaming) : base(sfInfo, streaming)   //just to meke it serializable....
+        {
+            
+        }
+    }
+}
+                            //base() : inheritits the constructors from BASE class EXCEPTION.

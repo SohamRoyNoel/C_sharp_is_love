@@ -1,0 +1,84 @@
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Country country1 = new Country() { code = 101, name = "India", capital = "Delhi" };
+            Country country2 = new Country() { code = 103, name = "US", capital = "London" };
+            Country country3 = new Country() { code = 105, name = "Uk", capital = "Breten" };
+            Country country4 = new Country() { code = 115, name = "Paris", capital = "Paris2" };
+            Country country5 = new Country() { code = 120, name = "Norway", capital = "Antraktika" };
+
+            Queue<Country> queueob = new Queue<Country>();
+            queueob.Enqueue(country1);
+            queueob.Enqueue(country2);
+            queueob.Enqueue(country3);
+            queueob.Enqueue(country4);
+            queueob.Enqueue(country5);
+
+            //printing the entire Queue
+            foreach(Country cc in queueob)
+            {
+                Console.WriteLine("Code = {0} , Name = {1}, Capital = {2}", cc.code, cc.name, cc.capital);
+            }
+
+            //removing item
+            Console.WriteLine();
+            queueob.Dequeue(); //Dequeue has no overloaded versions 
+            foreach (Country cc in queueob)
+            {
+                Console.WriteLine("Code = {0} , Name = {1}, Capital = {2}", cc.code, cc.name, cc.capital);
+            }
+
+            //Peek returns the first value on the top of the Queue
+            Console.WriteLine();
+            Country con = queueob.Peek();
+            Console.WriteLine("Code = {0} , Name = {1}, Capital = {2}", con.code, con.name, con.capital);
+
+            //using Peek twice will always show the FIRST ITEM
+            Console.WriteLine();
+            Country con2 = queueob.Peek();
+            Console.WriteLine("Code = {0} , Name = {1}, Capital = {2}", con2.code, con2.name, con2.capital);
+
+            //checking if an instance belongs to the QUEUE
+            Console.WriteLine();
+            if (queueob.Contains(country2))
+                Console.WriteLine("Exists");
+            else
+                Console.WriteLine("Doest Exists");
+
+            Console.ReadKey();
+        }
+    }
+    class Country
+    {
+        public int code { get; set; }
+        public string name { get; set; }
+        public string capital { get; set; }
+    }
+}
+-----------------------------------------------------------------------------
+Code = 101 , Name = India, Capital = Delhi
+Code = 103 , Name = US, Capital = London
+Code = 105 , Name = Uk, Capital = Breten
+Code = 115 , Name = Paris, Capital = Paris2
+Code = 120 , Name = Norway, Capital = Antraktika
+
+Code = 103 , Name = US, Capital = London
+Code = 105 , Name = Uk, Capital = Breten
+Code = 115 , Name = Paris, Capital = Paris2
+Code = 120 , Name = Norway, Capital = Antraktika
+
+Code = 103 , Name = US, Capital = London
+
+Code = 103 , Name = US, Capital = London
+
+Exists
+----------------------------------------------------------------------------

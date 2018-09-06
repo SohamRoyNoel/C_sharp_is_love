@@ -1,0 +1,133 @@
+using System;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Program p = new Program(); //p is an instance of program class
+            p.called();
+
+            Console.ReadLine();
+        }
+
+        public void called()
+        {
+            int j = 2;
+            for(int i=0;i<=5;i++)
+            {
+                j = j + 2;
+                Console.WriteLine(j);
+                Console.WriteLine("");
+            }
+            
+        }
+    }
+}
+
+the "Called" is not a static Method that is why it can be called by an instance of another method
+--------------------------------------------------------------------------------------------------------------------------------------
+using System;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Program.called();
+            Console.ReadLine();
+        }
+
+        public static void called()
+        {
+            int j = 2;
+            for(int i=0;i<=5;i++)
+            {
+                j = j + 2;
+                Console.WriteLine(j);
+                Console.WriteLine("");
+            }
+            
+        }
+    }
+}
+here "called" is a STATIC method that can only be accessed by the method only.
+----------------------------------------------------------------------------------------------------------------
+PARAMETERISED METHOD:::::
+
+using System;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Program.called(6);
+            Console.ReadLine();
+        }
+
+        public static void called(int take)
+        {
+            int j = 2;
+            for(int i=0;i<=take;i++)
+            {
+                j = j + 2;
+                Console.WriteLine(j);
+                Console.WriteLine("");
+            }
+            
+        }
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------------
+DUAL PARAMETERISED METHOD(static/instance)
+using System;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Program ob = new Program();
+            //ob.add(10, 15);
+            Program.add(10, 15);
+            Console.ReadLine();
+        }
+        public static int add(int took, int taken)
+        {
+            int u;
+            u = took + taken;
+            Console.WriteLine(u);
+            return u;
+        }
+        public static void called(int take)
+        {
+            int j = 2;
+            for(int i=0;i<=take;i++)
+            {
+                j = j + 2;
+                Console.WriteLine(j);
+                Console.WriteLine("");
+            }
+            
+        }
+    }
+}
+
+static method: name with static keyword
+instance method: a method that has no static keyword
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,147 @@
+*********************************************************************************
+CODE USING LIST
+*********************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Country country1 = new Country() { code = 101, name = "India", capital = "Delhi" };
+            Country country2 = new Country() { code = 103, name = "US", capital = "London" };
+            Country country3 = new Country() { code = 105, name = "Uk", capital = "Breten" };
+            Country country4 = new Country() { code = 115, name = "Paris", capital = "Paris2" };
+            Country country5 = new Country() { code = 120, name = "Norway", capital = "Antraktika" };
+
+            List<Country> con = new List<Country>();
+            con.Add(country1);
+            con.Add(country2);
+            con.Add(country3);
+            con.Add(country4);
+            con.Add(country5);
+
+            bool flag = true;
+            do
+            {
+                if (flag == true)
+                {
+                    Console.WriteLine("enter the country code");
+                    int cod = Convert.ToInt32(Console.ReadLine());
+
+                    Country l = con.Find(x => x.code == cod);
+                    if (l != null)
+                    {
+                        foreach (Country c in con)
+                        {
+                            if (c.code == cod)
+                                Console.WriteLine("Name = {0}, Capital = {1}", c.name, c.capital);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("country name doesnt exists");
+                    }
+                    Console.WriteLine("wanna continue? yes/no");
+                    string v = Console.ReadLine();
+
+                    if (v == "yes")
+                        flag = true;
+                    else
+                        flag = false;
+                }
+            } while (flag == true);
+            Console.ReadKey();
+        }
+    }
+    class Country
+    {
+        public int code { get; set; }
+        public string name { get; set; }
+        public string capital { get; set; }
+    }
+}
+*********************************************************************************
+enter the country code
+101
+Name = India, Capital = Delhi
+wanna continue? yes/no
+yes
+enter the country code
+103
+Name = US, Capital = London
+wanna continue? yes/no
+no
+*********************************************************************************
+*********************************************************************************
+CODE USING dictionary
+*********************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Country country1 = new Country() { code = 101, name = "India", capital = "Delhi" };
+            Country country2 = new Country() { code = 103, name = "US", capital = "London" };
+            Country country3 = new Country() { code = 105, name = "Uk", capital = "Breten" };
+            Country country4 = new Country() { code = 115, name = "Paris", capital = "Paris2" };
+            Country country5 = new Country() { code = 120, name = "Norway", capital = "Antraktika" };
+
+            Dictionary<int, Country> con = new Dictionary<int, Country>();
+            con.Add(country1.code, country1);
+            con.Add(country2.code, country2);
+            con.Add(country3.code, country3);
+            con.Add(country4.code, country4);
+            con.Add(country5.code, country5);
+
+            bool flag = true;
+            do
+            {
+                if (flag == true)
+                {
+                    Console.WriteLine("enter the country code");
+                    int cod = Convert.ToInt32(Console.ReadLine());
+                                        
+                    if (con.ContainsKey(cod))
+                    {
+                       foreach(var ivy in con)
+                        {
+                            if (ivy.Value.code == cod)
+                                Console.WriteLine("Name = {0}, Capital = {1}", ivy.Value.name, ivy.Value.capital);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("country name doesnt exists");
+                    }
+                    Console.WriteLine("wanna continue? yes/no");
+                    string v = Console.ReadLine();
+
+                    if (v == "yes")
+                        flag = true;
+                    else
+                        flag = false;
+                }
+            } while (flag == true);
+            Console.ReadKey();
+        }
+    }
+    class Country
+    {
+        public int code { get; set; }
+        public string name { get; set; }
+        public string capital { get; set; }
+    }
+}

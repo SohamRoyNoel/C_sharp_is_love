@@ -1,0 +1,222 @@
+************************************************************************************************************************
+NEXT OF """""""""GETTER & setter method keeps fields private from globe"""""""""""
+PROPERTIES : {get; set;} 
+get; Gives VALUE::::::::::::::
+set; Grants VALUE:::::::::::::
+************************************************************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    public class school
+    {
+        private int id = 100;
+        private string name = "john";
+        private string marks = "35";
+
+        public int ID //works like FIELD; VALUE is nothing but aDEFAULT PARAMETER
+        {
+            get { return this.id; }
+            set { this.id = (value <= 0) ? throw new Exception("ID CANT BE NEGATIVE") : value; }
+        }
+
+        public string  Name
+        {
+            get { return string.IsNullOrEmpty(this.name) ? throw new Exception("No Name") : this.name; }
+            set { this.name = (string.IsNullOrEmpty(value)) ? throw new Exception("Name can't be NULL") : value; }
+        }
+
+        public string MARKS
+        {
+            get { return this.marks; }
+        }
+    }
+  class Program
+    {
+        static void Main(string[] args)
+        {
+           school ob= new school();
+            ob.Name = "Soham";
+            ob.ID = 206;
+            Console.WriteLine("id={0}, name={1}, marks={2}", ob.ID, ob.Name, ob.MARKS);
+            Console.ReadKey();
+        }
+    }
+}
+************************************************************************************************************************
+AUTO IMPLEMENTATION OF PROPERTIES
+************************************************************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    public class school
+    {
+        private int id = 100;
+        private string name = "john";
+        private string marks = "35";
+        //AUTOIMPLEMENTATION OF PROPERTIES
+
+        public string EMAIL { get; set; }
+        public string CITY { get; set; }
+
+        public int ID
+        {
+            get { return this.id; }
+            set { this.id = (value <= 0) ? throw new Exception("ID CANT BE NEGATIVE") : value; }
+        }
+
+        public string  Name
+        {
+            get { return string.IsNullOrEmpty(this.name) ? throw new Exception("No Name") : this.name; }
+            set { this.name = (string.IsNullOrEmpty(value)) ? throw new Exception("Name can't be NULL") : value; }
+        }
+
+        public string MARKS
+        {
+            get { return this.marks; }
+        }
+    }
+  class Program
+    {
+        static void Main(string[] args)
+        {
+           school ob= new school();
+            ob.Name = "Soham";
+            ob.ID = 206;
+            ob.EMAIL = "soham.roy.developer";
+            ob.CITY = "Kolkata";
+            Console.WriteLine("id={0}, name={1}, marks={2}, email={3}, city={4}", ob.ID, ob.Name, ob.MARKS, ob.EMAIL, ob.CITY);
+            Console.ReadKey();
+        }
+    }
+}
+************************************************************************************************************************
+C# 6.0 version
+************************************************************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    public class school
+    {
+        private string Firstnm;
+        private string Lastnm;
+
+        public school(string Fn, String Ln)
+        {
+            Firstnm = Fn;
+            Lastnm = Ln;
+        }
+
+        public string Name => $"{Firstnm} {Lastnm}";
+    }
+  class Program
+    {
+        static void Main(string[] args)
+        {
+           school ob=new school("Soham", "Roy");
+            Console.WriteLine(ob.Name);
+            Console.ReadKey();
+        }
+    }
+}
+************************************************************************************************************************
+C# 6.0 version : LIMITATIONS; can use this WAY only when ONE METHOD is needed; coz IF
+YOU PUT A CONSTRUCTOR you have to supply all value 
+for
+school ob=new school(< >, < >);
+< > places;
+OVERTAKES C# 7.0
+************************************************************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    public class school
+    {
+        private int id;
+        private string name;
+        private string marks = "35";
+
+        public school(int Fn, String Ln)
+        {
+            id = Fn;
+            name = Ln;
+        }
+
+        public string Name => $"{name}";
+        public string ID => $"{id}";
+        public string MARKS => $"{marks}";
+    }
+  class Program
+    {
+        static void Main(string[] args)
+        {
+           school ob=new school();
+            Console.WriteLine(ob.Name);
+            Console.ReadKey();
+        }
+    }
+}
+************************************************************************************************************************
+C# 7.0 version
+************************************************************************************************************************
+using System;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp3
+{
+    public class parent
+    {
+        private string marks = "35";
+        public string ret
+        {
+            get => $"35";
+        }
+    }
+    public class school 
+    {
+        private int id;
+        private string name;
+        
+        public school(int ID, string NAME) //we cant take marks here, due to we gotta put MARKS AS a CONSTRUCTOR, then we would need to put """""school ob=new school(105,"Soham Roy", "35");"""""""""""" here, Which is not expected. SO BETTER MAKE ANOTHER CLASS.
+        {
+            id = ID;
+            name = NAME;
+            
+        }
+
+        public int TAKEID
+        {
+            get => this.id;
+            set => this.id = value;
+        }
+
+        public string TAKENAME
+        {
+            get => this.name;
+            set => this.name = value;
+        }
+    }
+  class Program
+    {
+        static void Main(string[] args)
+        {
+            school ob=new school(105,"Soham Roy");
+            parent ob1=new parent();
+            Console.WriteLine("id={0}, Name={1}, passmarks={2}", ob.TAKEID, ob.TAKENAME, ob1.ret);
+            Console.ReadKey();
+        }
+    }
+}
+

@@ -1,0 +1,13 @@
+****************************************
+Convert.ToString() vs .ToString()
+****************************************
+Convert.ToString() : HANDELS NULL
+.To String() : Doesnt handel null ----- THROWS NULL REFFERENCE EXCEPTION
+
+*************************************************
+USABILITY
+*************************************************
+in case of UI design:
+		USE CONVERT.TOSTRING() JUST TO show an error message.
+in case of CLASS DESIGN
+		USE .TOSTRINR() to throw an error

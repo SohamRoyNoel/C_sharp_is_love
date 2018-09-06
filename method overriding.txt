@@ -1,0 +1,80 @@
+************************************************************
+over riding : polymorphism
+************************************************************
+using System;
+using System.Net.Http;
+
+namespace ConsoleApp3
+{
+    class bs
+    {
+        public virtual void take()
+        {
+            Console.WriteLine("invoked from parent");
+            Console.ReadKey();
+        }
+    }
+
+    class bst : bs
+    {
+        public override void take()           //USES OVERRIDE
+        {
+            Console.WriteLine("invoked from child");
+            Console.ReadKey();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           bs ob=new bst();
+           ob.take();                     //invoked from child
+
+            //bst ob1=new bst();
+            //ob1.take();                 //invoked from child
+
+            bs ob=new bs();
+            ob.take();                     //invoked from parent
+        }
+    }
+}
+************************************************************
+method hiding : 
+************************************************************
+using System;
+using System.Net.Http;
+
+namespace ConsoleApp3
+{
+    class bs
+    {
+        public virtual void take()
+        {
+            Console.WriteLine("invoked from parent");
+            Console.ReadKey();
+        }
+    }
+
+    class bst : bs
+    {
+        public new void take()   //USES NEW to intentionally hide this METHOD
+        {
+            Console.WriteLine("invoked from child");
+            Console.ReadKey();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bs ob = new bst();
+            ob.take();                  //invoked from parent
+
+            bst ob1 = new bst();
+            ob1.take();                //invoked from child
+
+            bs ob2=new bs();
+            ob2.take();                 //invoked from parent
+        }
+    }
+}

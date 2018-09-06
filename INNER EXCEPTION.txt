@@ -1,0 +1,90 @@
+****************************************************************************
+INNER EXCEPTION: when we have an exception underling another exception
+****************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                Console.WriteLine("enter first number");
+                int a = Convert.ToInt32(Console.ReadLine());           //10
+                Console.WriteLine("enter second number");
+                int b = Convert.ToInt32(Console.ReadLine());           //0
+                int c = a / b;                                                                  //divided by zero EXCEPTION
+                Console.WriteLine(c);
+                Console.ReadKey();
+            }
+            catch (Exception e)
+            {
+                string path = @"C:\Users\HP\Desktop\course\c#\my c#code\exception1_listing.txt";        //CHECKS THE FILE TO LIST OUT.
+                StreamWriter obStreamWriter=new StreamWriter(path);
+                obStreamWriter.Write(e.Message);                                            //PRINTS THE ERROR MESSAGE TO NOTEPAD FILE
+                obStreamWriter.Close();
+                Console.WriteLine(e.Message);            //PRINTS THE ERROR MESSAGE ON CONSOLE
+                throw;
+            }
+            
+        }
+    }
+}
+****************************************************************************
+if we dont have the file ON THE SPECIFIED LOCATION:
+****************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                try
+                {
+                    Console.WriteLine("enter first number");
+                    int a = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("enter second number");
+                    int b = Convert.ToInt32(Console.ReadLine());
+                    int c = a / b;
+                    Console.WriteLine(c);
+                    Console.ReadKey();
+                }
+                catch (Exception e)
+                {
+                    string path = @"C:\Users\HP\Desktop\course\c#\my c#code\exception1_listing.txt";
+                    if (File.Exists(path))
+                    {
+                        StreamWriter obStreamWriter = new StreamWriter(path);
+                        obStreamWriter.Write(e.Message);
+                        obStreamWriter.Close();
+                        Console.WriteLine(e.Message);
+                    }
+                    else
+                    {
+                        throw new FileNotFoundException(path+ "is not present", e);  //if you dont pass THE MAIN EXCEPTION OBJECT, then INNEREXCEPTION WILL BE null, 
+                    }
+                }
+            }
+            catch (Exception ep)
+            {
+                Console.WriteLine(ep.InnerException.Message);            //ep will point to null, as a reason THIS WILL ALSO SHOW NULL
+                Console.ReadKey();
+            }
+        }
+    }
+}
+*********************************************************************

@@ -1,0 +1,229 @@
+Partial Methods
+________________________________
+A partial class or struct may contain a partial method. One part of the class contains the signature of the method. An optional implementation may be defined in the same part or another part. 
+If the implementation is not supplied, then the method and all calls to the method are removed at compile time.
+
+Any code in the partial class can freely use a partial method, even if the implementation is not supplied. No compile-time or run-time errors will result if the method is called but not implemented.
+
+******************************************************************************************************
+RULES REGARDING PARTIAL METHOD
+******************************************************************************************************
+> Partial method declarations must begin with the contextual keyword partial and the method must return VOID.
+
+> Partial methods can have ref but NO OUT parameters.
+
+> Partial methods are implicitly PRIVATE, and therefore they cannot be virtual.
+
+> Partial methods cannot be extern, because the presence of the body determines whether they are defining or implementing.
+
+> Partial methods can have STATIC & UNSAFE modifiers.
+
+> Partial methods can be generic. Constraints are put on the defining partial method declaration, and may optionally be repeated on the implementing one. Parameter and type parameter names do not have to be the same in the implementing declaration as in the defining one.
+
+> You can make a delegate to a partial method that has been defined and implemented, but not to a partial method that has only been defined.
+
+>Partial METHOD can be defined only inside PARTIAL CLASS...
+**********************************************************************************************************
+EXAMPLE 1
+**********************************************************************************************************
+MAIN FILE:-----------------------
+
+using System;
+using System.Text;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Class1 ob = new Class1();
+            ob.normal();
+            Console.ReadKey();
+        }
+  
+    }
+}
+
+PARTIAL CLASS FILE:-----------------------
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp3
+{
+    public partial class Class1
+    {
+        partial void method1();   //METHOD HAS SIGNATURE, but no implementation, RATHER it never gives ERROR:::: it prints THE MESSAGE on console
+
+        public void normal()
+        {
+            Console.WriteLine("from normal method of class 1");
+            method1(); //called & no implemenation is given, BUT NEVER GIVES AN ERROR.
+        }
+    }
+}
+**********************************************************************************************************
+Example 2
+**********************************************************************************************************
+MAIN FILE:-----------------------
+
+using System;
+using System.Text;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Class1 ob = new Class1();
+            ob.normal();
+            Console.ReadKey();
+        }
+  
+    }
+}
+
+PARTIAL CLASS FILE 1-----------------------
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp3
+{
+    public partial class Class1
+    {
+        partial void method1();   //METHOD HAS SIGNATURE, & got implementation at "Class File 2"//
+
+        public void normal()
+        {
+            Console.WriteLine("from normal method of class 1");
+            method1(); 
+        }
+    }
+}
+
+PARTIAL CLASS FILE 2-----------------------
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp3
+{
+    partial class Class1
+    {
+        partial void method1()
+        {
+            Console.WriteLine("from PARTIAL METHOD");
+        }
+    }
+}
+
+**********************************************************************************************************
+Example 3 (A PARTIAL METHOD can have a SIGNATURE & IMPLEMENTATION at a same file.   
+NEEDS
+1. SIGNATURE (MUST)
+2. IMPLEMENTATION (OPTIONAL)
+**********************************************************************************************************
+
+MAIN FILE:-----------------------
+
+using System;
+using System.Text;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Class1 ob = new Class1();
+            ob.normal();
+            Console.ReadKey();
+        }
+  
+    }
+}
+
+PARTIAL CLASS FILE 1-----------------------
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp3
+{
+    public partial class Class1
+    {
+        partial void method1();   //METHOD HAS SIGNATURE, & got implementation at "Class File 2"//
+
+         public static void Main(string[] args)
+        {
+            Class1 ob = new Class1();
+            ob.normal();
+            Console.ReadKey();
+        }
+
+        public void normal()
+        {
+            Console.WriteLine("from normal method of class 1");
+            method1(); 
+        }
+    }
+}
+////////////////////////////////////ALSO GIVES THE SAME OUTPUT
+**********************************************************************************************************
+Example 4 : WRONG WAY TO IMPLEMENT PARTIAL METHOD
+**********************************************************************************************************
+
+using System;
+using System.Text;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Class1 ob = new Class1();
+            ob.normal();
+            Console.ReadKey();
+        }
+  
+    }
+}
+
+PARTIAL CLASS FILE 1-----------------------
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp3
+{
+    public partial class Class1
+    {
+       //NO SIGNATURE; ONLY IMPLEMENTATION = ERROR
+
+         public static void Main(string[] args)
+        {
+            Class1 ob = new Class1();
+            ob.normal();
+            Console.ReadKey();
+        }
+
+        public void normal()
+        {
+            Console.WriteLine("from normal method of class 1");
+            method1(); 
+        }
+    }
+}

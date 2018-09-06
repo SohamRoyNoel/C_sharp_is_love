@@ -1,0 +1,157 @@
+**************************************************************************************
+WHE WE TRY TO READ A FILE FROM A DRIVE.
+**************************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            StreamReader obReader = new StreamReader(@"F:\New folder\td.txt");
+            Console.WriteLine(obReader.ReadToEnd());
+            obReader.Close();
+            Console.ReadKey();
+        }
+    }
+}
+*************************************************************************
+ERROR CASE
+*************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                StreamReader obReader = new StreamReader(@"F:\New folder\td1.txt");
+                Console.WriteLine(obReader.ReadToEnd());
+                obReader.Close();
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Console.ReadKey();
+            }
+        }
+        
+    }
+}
+*****************************************************
+output:
+
+System.IO.FileNotFoundException: Could not find file 'F:\New folder\td1.txt'.
+File name: 'F:\New folder\td1.txt'
+   at System.IO.FileStream.OpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path)
+   at ConsoleApp3.Program.Main(String[] args) in C:\Users\HP\source\repos\ConsoleApp3\ConsoleApp3\Program.cs:line 15
+*********************************************************
+any type of EXCEPTION is inherited from EXCEPTION class.....
+THAT IS WHY ANY KIND OF EXCEPTIONS SHOULD BE KEPT AT VERY LAST.
+**********************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                StreamReader obReader = new StreamReader(@"F:\New folder\td1.txt"); //STREAMREADER IS USED TO READ A FILE FROM ANY DIRECTORY
+                Console.WriteLine(obReader.ReadToEnd());
+                obReader.Close();
+                Console.ReadKey();
+            }
+            catch (FileNotFoundException obException)  //SUBSET OF exception CLASS
+            {
+                Console.WriteLine(obException.Message);   //SHOWS THE MESSAGE
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine(obException.StackTrace); //SHOWS THE LINE WHERE THE EXCEPTION OCCURED
+                Console.ReadKey();
+            }
+            catch (Exception ex) // PARENT SHOULD ALWAYS BE KEPT AT LAST
+            {
+                Console.WriteLine(ex);
+                Console.ReadKey();
+            }
+        }  
+    }
+}
+
+********************************************************************************************************************************************************
+finally
+***************************************************************************************************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            StreamReader obReader = null;
+            try
+            {
+                obReader = new StreamReader(@"F:\New folder\td.txt");
+                Console.WriteLine(obReader.ReadToEnd());
+                
+            }
+            catch (FileNotFoundException obException)
+            {
+                Console.WriteLine(obException.Message);
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine(obException.StackTrace);
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Console.ReadKey();
+            }
+            finally
+            {
+                if (obReader!=null)
+                {
+                    obReader.Close();
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine("oh yeah!");
+                    Console.ReadKey();
+                }
+            }
+        }
+        
+    }
+}
+
+********************************************************************************************************************************************************

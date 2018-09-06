@@ -1,0 +1,179 @@
+********************************************************************
+SIMPLE CALCULATOR CLASS
+
+attributes allows to add declaritive i/f to programme.This i/f can be carried at runtime using reflection.
+
+if you simply delete the old method that will crash your system, better JUST TO MAKE IT obsolete.....!
+********************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine(add2());
+            Console.ReadKey();
+        }
+        [Obsolete]
+        public static int add(int a, int b)
+        {
+            int c = a + b;
+            return c;
+        }
+     }
+}
+********************************************************************
+USING ANOTHER METHOD JUST TO MAKE THE OLD ONE OBSOLETE
+********************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine(add(10,20));
+            Console.ReadKey();
+        }
+        [Obsolete]       //PUT THIS HERE; AND if you hoover your mouse on add() youll get GREEN curve: (SAYS THE METHOD IS OBSOLETE)
+        public static int add(int a, int b)
+        {
+            int c = a + b;
+            return c;
+        }
+        public static int add2(List<int> numbers)
+        {
+            int sum = 0;
+            foreach(int n in numbers)
+            {
+                sum = sum + n;
+            }
+            return sum;
+        }
+    }
+}
+********************************************************************
+using add2 METHOD
+
+[obsolete]
+********************************************************************
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine(Program.add2(new List<int>() { 10,20,30,40,50}));
+            Console.ReadKey();
+        }
+        [Obsolete]
+        public static int add(int a, int b)
+        {
+            int c = a + b;
+            return c;
+        }
+        public static int add2(List<int> numbers)
+        {
+            int sum = 0;
+            foreach(int n in numbers)
+            {
+                sum = sum + n;
+            }
+            return sum;
+        }
+    }
+}
+********************************************************************
+OVERLOADED VERSIONS OF OBSOLETE
+
+[obsolete("<message>")]
+********************************************************************
+using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine(add(10, 20));
+            //Console.WriteLine(Program.add2(new List<int>() { 10,20,30,40,50}));
+            Console.ReadKey();
+        }
+        [Obsolete("please stop fucking that old pussy")] //this message will be shown when you hoover the mouse on the OBSOLETED one.
+        public static int add(int a, int b)
+        {
+            int c = a + b;
+            return c;
+        }
+        public static int add2(List<int> numbers)
+        {
+            int sum = 0;
+            foreach(int n in numbers)
+            {
+                sum = sum + n;
+            }
+            return sum;
+        }
+    }
+}
+
+********************************************************************
+3RD PARAMETER OF OBSOLETE METHOD;
+
+TRUE: red curve on the method --- ERROR / NOT USEABLE
+FALSE: green curve that shows the message -- NOT ERROR-WARNING/ USEABLE
+
+[Obsolete("<mesage>", true/false)]
+********************************************************************
+using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine(add(10, 20));
+            //Console.WriteLine(Program.add2(new List<int>() { 10,20,30,40,50}));
+            Console.ReadKey();
+        }
+        [Obsolete("please stop fucking that old pussy", true)]
+        public static int add(int a, int b)
+        {
+            int c = a + b;
+            return c;
+        }
+        public static int add2(List<int> numbers)
+        {
+            int sum = 0;
+            foreach(int n in numbers)
+            {
+                sum = sum + n;
+            }
+            return sum;
+        }
+    }
+}

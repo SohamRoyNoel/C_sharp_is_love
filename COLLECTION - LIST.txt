@@ -1,0 +1,583 @@
+***************************************************************************************************************
+CREATING A LIST, PUSHING ELEMENTS IN & PRINTING THE ELEMENT OUT
+List is one of the collection generic classes present in System.Collections.Generic namespace
+***************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 500 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 200 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+            List<Customer> listCus = new List<Customer>(2);
+            listCus.Add(customer1);
+            listCus.Add(customer2);
+            listCus.Add(customer3);
+
+            foreach(Customer cc in listCus)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Pay = {2}", cc.name, cc.id, cc.pay);
+            }
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+}
+****************************************************************************************************************************
+When a class inherits from another class, THEN ONLY WE CAN USE THE object of the class, TO ADD ELEMENTS IN LIST<>
+****************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 500 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 200 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+            List<Customer> listCus = new List<Customer>(2);
+            listCus.Add(customer1);
+            listCus.Add(customer2);
+            listCus.Add(customer3);
+
+            GRANDPAY gdp = new GRANDPAY();  //CREATING AN OBJECT
+            listCus.Add(gdp);  //ACCESSING WITH THE OBJECT
+ 
+            //foreach(Customer cc in listCus)
+            //{
+            //    Console.WriteLine("Name = {0}, Id = {1}, Pay = {2}", cc.name, cc.id, cc.pay);
+            //}
+            //Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+    class GRANDPAY : Customer   //INHERITTING FROM cUSTOMER CLASS
+    {
+
+    }
+}
+ 					//NO ERROR
+****************************************************************************************************************************
+YOU can insert any element at any index of a list by using <object>.Insert("Index", Object)
+****************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 500 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 200 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+            List<Customer> listCus = new List<Customer>(2);
+            listCus.Add(customer1);
+            listCus.Add(customer2);
+            listCus.Add(customer3);
+            listCus.Insert(1, customer3);
+
+            foreach(Customer cc in listCus)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Pay = {2}", cc.name, cc.id, cc.pay);
+            }
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+}
+------------------------------------------
+Name = Soham, Id = 101, Pay = 500
+Name = Sreeparna, Id = 105, Pay = 350
+Name = Ivy, Id = 103, Pay = 200
+Name = Sreeparna, Id = 105, Pay = 350
+-------------------------------------------
+****************************************************************************************************************************
+FINDING INDEX USING OBJECT : Object.IndexOf((object) / (object, <start from>) / (object, <start from>, <stop where>)
+****************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 500 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 200 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+            List<Customer> listCus = new List<Customer>(2);
+            listCus.Add(customer1); // pos - 0
+            listCus.Add(customer2); // pos - 2
+            listCus.Add(customer3);  // pos - 3
+            listCus.Insert(1, customer3); //pos -1
+
+
+            //Console.WriteLine(listCus.IndexOf(customer2));  // 2   (when you find only using the object)
+            //Console.WriteLine(listCus.IndexOf(customer2, 1)); // 2   (searching from 1st place)
+            //Console.WriteLine(listCus.IndexOf(customer1, 2)); //-1   (searching customer1 from 2nd position) - thats not available
+            //Console.WriteLine(listCus.IndexOf(customer2, 1, 2)); // 2 (Customer2 is searched from 1ST INDEX to NEXT 2 INDEXES)
+            Console.WriteLine(listCus.IndexOf(customer3, 2, 1)); // -1  (Customer3 is searched from 2ND INDEX to NEXT 1 INDEXES) -- NOT FOUND
+
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+    
+}
+****************************************************************************************************************************
+object.contains(<obj>) --> gives BOOL as returntype
+****************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 500 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 200 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+            List<Customer> listCus = new List<Customer>(2);
+            listCus.Add(customer1);
+            listCus.Add(customer2);
+            listCus.Add(customer3);
+
+            if (listCus.Contains(customer2))
+                Console.WriteLine("found"); 
+            else
+                Console.WriteLine("Notfound");
+
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+    
+}
+****************************************************************************************************************************
+object.Exists(Lambda expression or condition) --> gives BOOL as returntype
+****************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 500 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 200 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+            List<Customer> listCus = new List<Customer>(2);
+            listCus.Add(customer1);
+            listCus.Add(customer2);
+            listCus.Add(customer3);
+
+            if (listCus.Exists(cat => cat.name.StartsWith("S")))
+                Console.WriteLine("found");
+            else
+                Console.WriteLine("Notfound");
+
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+    
+}
+****************************************************************************************************************************
+object.Find(Lambda expression or condition) --> gives an object not a list tpye *** it reaturns the FIRST MATCHING ITEM********
+****************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 500 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 200 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+            List<Customer> listCus = new List<Customer>(2);
+            listCus.Add(customer1);
+            listCus.Add(customer2);
+            listCus.Add(customer3);
+
+            Customer cs = listCus.Find(m => m.pay > 340);
+            Console.WriteLine("Name = {0}, Id = {1}, Pay = {2}", cs.name, cs.id, cs.pay);   //Name = Soham, Id = 101, Pay = 500
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+    
+}
+****************************************************************************************************************************
+object.Find(Lambda expression or condition) --> gives an object not a list tpye *** it reaturns the LAST MATCHING ITEM********
+****************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 500 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 200 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+            List<Customer> listCus = new List<Customer>(2);
+            listCus.Add(customer1);
+            listCus.Add(customer2);
+            listCus.Add(customer3);
+
+            Customer cs = listCus.FindLast(m => m.pay > 340);
+            Console.WriteLine("Name = {0}, Id = {1}, Pay = {2}", cs.name, cs.id, cs.pay);   // Name = Sreeparna, Id = 105, Pay = 350
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+    
+}
+
+****************************************************************************************************************************
+object.FindAll(Lambda expression or condition) --> returns LIST 
+****************************************************************************************************************************
+
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 500 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 200 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+            List<Customer> listCus = new List<Customer>(2);
+            listCus.Add(customer1);
+            listCus.Add(customer2);
+            listCus.Add(customer3);
+
+            List<Customer> cs = listCus.FindAll(m => m.pay > 300);
+            foreach(Customer c in cs)
+            {
+                Console.WriteLine("Name = {0}, Id = {1}, Pay = {2}", c.name, c.id, c.pay);  // Name = Soham, Id = 101, Pay = 500   // Name = Sreeparna, Id = 105, Pay = 350
+            }
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+    
+}
+****************************************************************************************************************************
+object.FindIndex(Lambda expression or condition) --> returns int     *****RETURNS THE FIRST MATCHED ITEM**********
+****************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 90 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 500 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+            List<Customer> listCus = new List<Customer>(2);
+            listCus.Add(customer1);
+            listCus.Add(customer2);
+            listCus.Add(customer3);
+
+            int x = listCus.FindIndex(m => m.pay > 400); // 1 IF IT BECOMES UNABLE TO FIND, it returns  -1
+            Console.WriteLine(x);
+          
+           //HERE HAS SOME SAME 3 OVERLOADS DISCUSSED .FindLastIndex() method, check them
+
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+    
+}
+****************************************************************************************************************************
+object.FindLastIndex(Lambda expression or condition) --> returns int     *****RETURNS THE Last MATCHED ITEM**********
+****************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 90 };  //0
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 500 };     //1
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };  //2
+
+            List<Customer> listCus = new List<Customer>(2);
+            listCus.Add(customer1);
+            listCus.Add(customer2);
+            listCus.Add(customer3);
+
+            int x = listCus.FindLastIndex(m => m.pay <370);
+            Console.WriteLine(x);   //2
+
+            int x = listCus.FindLastIndex(2, m => m.pay < 370);   //it start searching from 2nd position
+            Console.WriteLine(x);  //2
+
+            int x = listCus.FindLastIndex(1, 2, m => m.pay < 370);   //starts from pos 1 and stop at 2nd *and CHOOSES FIRST
+            Console.WriteLine(x);   //0
+ 
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+    
+}
+
+****************************************************************************************************************************
+CONVERT AN ARRAY INTO LIST  (.tolist)
+****************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 90 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 500 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+            Customer[] cus = new Customer[3];
+            cus[0] = customer1;
+            cus[1] = customer2;
+            cus[2] = customer3;
+
+            List<Customer> cup = cus.ToList();
+
+            foreach(Customer c in cup)
+            {
+                Console.WriteLine("Name = {0},  Id = {1}, Pay = {2}", c.name, c.id, c.pay);
+            }
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+    
+}
+-------------------------------------------------------------------
+Name = Soham,  Id = 101, Pay = 90
+Name = Ivy,  Id = 103, Pay = 500
+Name = Sreeparna,  Id = 105, Pay = 350
+--------------------------------------------------------------------
+****************************************************************************************************************************
+CONVERT AN list INTO array  (.ToArray())
+****************************************************************************************************************************
+
+
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 90 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 500 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+
+            List<Customer> cup = new List<Customer>();
+            cup.Add(customer1);
+            cup.Add(customer2);
+            cup.Add(customer3);
+            cup.ToArray();
+
+            foreach(Customer c in cup)
+            {
+                Console.WriteLine("Name = {0},  Id = {1}, Pay = {2}", c.name, c.id, c.pay);
+            }
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+    
+}
+-------------------------------------------------------------------
+Name = Soham,  Id = 101, Pay = 90
+Name = Ivy,  Id = 103, Pay = 500
+Name = Sreeparna,  Id = 105, Pay = 350
+--------------------------------------------------------------------
+****************************************************************************************************************************
+CONVERT AN list INTO Dictionary  (.ToArray())
+****************************************************************************************************************************
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Customer customer1 = new Customer() { name = "Soham", id = 101, pay = 90 };
+            Customer customer2 = new Customer() { name = "Ivy", id = 103, pay = 500 };
+            Customer customer3 = new Customer() { name = "Sreeparna", id = 105, pay = 350 };
+
+
+            List<Customer> cup = new List<Customer>();
+            cup.Add(customer1);
+            cup.Add(customer2);
+            cup.Add(customer3);
+            Dictionary<int, Customer> dic = cup.ToDictionary(m => m.id); //since it is a dictionary that is why key and value pair is needed, here value pair ca be count as OPTIONAL.
+
+            foreach(var d in dic)
+            {
+                Console.WriteLine("Name = {0},  Id = {1}, Pay = {2}", d.Value.name, d.Value.id, d.Value.pay);
+            }
+            Console.ReadKey();
+        }
+    }
+    class Customer
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int pay { get; set; }
+    }
+    
+}
+-------------------------------------------------------------------
+Name = Soham,  Id = 101, Pay = 90
+Name = Ivy,  Id = 103, Pay = 500
+Name = Sreeparna,  Id = 105, Pay = 350
+--------------------------------------------------------------------

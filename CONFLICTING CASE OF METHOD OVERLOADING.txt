@@ -1,0 +1,130 @@
+CONFLICTING CASE OF METHOD OVERLOADING
+******************************************************************************
+using System;
+using System.Net.Http;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int p;
+            add(5, 10, out p);
+            Console.WriteLine(p);
+            Console.ReadKey();
+
+            Console.WriteLine();
+
+            int p1=add(5, 10);
+            Console.WriteLine(p1);
+            Console.ReadKey();
+        }
+
+        public static int add(int fn, int sn)
+        {
+            int j = fn + sn;
+            Console.WriteLine("executed by int method");
+            return j;
+        }
+
+        public static void add(int fn, int sn, out int tn)
+        {
+            Console.WriteLine("executed by out method");
+            tn = sn + fn;
+        }
+    }
+}
+****************************************
+executed by out method
+15
+
+executed by int method
+15
+****************************************
+a SIGNATURE of a method CAN BE FOUND BY 3 THINGS
+[public static void add(int fn, int sn, out int tn)]
+
+NAME: add
+TYPE: int
+KIND: out
+NUMBER: no of parameters
+:::::::DOESN' DEPEND UPON :- return type( void /int ) 
+************************************************
+SIGNATURE, defines the type of  a function
+Ex:
+
+using System;
+using System.Net.Http;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int p;
+            add(5, 10, out p);
+            Console.WriteLine(p);
+            Console.ReadKey();
+
+            Console.WriteLine();
+
+            int p1=add(5, 10);
+            Console.WriteLine(p1);
+            Console.ReadKey();
+        }
+
+        public static int add(int fn, int sn)    //INT DATATYPE
+        {
+            int j = fn + sn;
+            Console.WriteLine("executed by int method");
+            return j;
+        }
+
+        public static void add(int fn, int sn)  //VOID DATATYPE
+        {
+            int tn;
+            tn = sn + fn;
+            Console.WriteLine(tn);
+        }
+    }
+}
+                        //BUILD ERROR, having same signature::
+************************************************
+************************************************
+PARAMS: params never attends in method overloading
+
+using System;
+using System.Net.Http;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int p;
+            add(5, 10, out p);
+            Console.WriteLine(p);
+            Console.ReadKey();
+
+            Console.WriteLine();
+
+            int p1=add(5, 10);
+            Console.WriteLine(p1);
+            Console.ReadKey();
+        }
+
+        public static int add(int fn, int sn, params int[ ]arr)    //INT DATATYPE
+        {
+            //
+        }
+
+        public static void add(int fn, int sn, int [ ]arr)  //VOID DATATYPE
+        {
+           //
+        }
+    }
+}
+                          //BUILD ERROR, having no difference of parameters.
